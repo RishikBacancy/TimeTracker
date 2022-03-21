@@ -31,7 +31,7 @@ const SigninScreen = ({ navigation }) => {
 		<View style={styles.screen}>
 			<Text style={styles.textWrap}>Signin</Text>
 
-			<Image source={require('../assets/logo.png')} resizeMode="contain" style={styles.logoContainer} />
+			<Image source={require('../../assets/logo.png')} resizeMode="contain" style={styles.logoContainer} />
 
 			<View style={styles.formContainer}>
 				<InputField
@@ -49,6 +49,10 @@ const SigninScreen = ({ navigation }) => {
 					onChangeText={(data) => setPassword(data)}
 					inputValue={password}
 				/>
+
+				<TouchableOpacity onPress={() => navigation.navigate('Forgot')}>
+					<Text style={styles.simpleText}>Forgot Password?</Text>
+				</TouchableOpacity>
 
 				<SimpleButton btnTitle={'SignIn'} onPress={signInHandler} />
 			</View>
@@ -74,16 +78,15 @@ const SigninScreen = ({ navigation }) => {
 					onPress={() => googleLogin()}
 				/>
 
-                { Platform.OS === "android" ? (
-                    <SocialButton
-					iconName={'apple'}
-					iconColor={'black'}
-					btnBgColor={'#ccc'}
-					btnTitle={'Signin With Apple'}
-					onPress={() => {}}
-				/>
-                ) : null}
-
+				{Platform.OS === 'ios' ? (
+					<SocialButton
+						iconName={'apple'}
+						iconColor={'black'}
+						btnBgColor={'#ccc'}
+						btnTitle={'Signin With Apple'}
+						onPress={() => {}}
+					/>
+				) : null}
 			</View>
 		</View>
 	);

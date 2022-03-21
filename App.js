@@ -1,5 +1,5 @@
 import React from "react";
-import Provider from "./navigaion/Provider";
+import Provider from "./src/navigaion/Provider";
 
 const App = () =>
 {

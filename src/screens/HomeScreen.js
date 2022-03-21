@@ -17,9 +17,11 @@ const HomeScreen = ({navigation}) => {
             <Text>Home Screen</Text>
             <Text>{user.uid}</Text>
             <SimpleButton
-                    btnTitle={"LogOut"}
-                    onPress={logOutHandler}
-                />
+                btnTitle={"LogOut"}
+                onPress={logOutHandler}/>
+            <SimpleButton
+                btnTitle={"Profile"}
+                onPress={()=>{navigation.navigate("Profile")}}/>
         </View>
 
     );
