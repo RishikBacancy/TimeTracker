@@ -19,9 +19,6 @@ const HomeScreen = ({navigation}) => {
             <SimpleButton
                 btnTitle={"LogOut"}
                 onPress={logOutHandler}/>
-            <SimpleButton
-                btnTitle={"Profile"}
-                onPress={()=>{navigation.navigate("Profile")}}/>
         </View>
 
     );

@@ -5,7 +5,7 @@ import auth from "@react-native-firebase/auth";
 
 import { AuthContext } from "../navigaion/AuthProvider";
 
-const ProfileScreen = () =>
+const ProfileScreen = props =>
 {
 
     const { user, forgotPswd } = useContext(AuthContext);
@@ -13,7 +13,7 @@ const ProfileScreen = () =>
     return(
         <View style={styles.screen}>
             <Text>Profile Screen</Text>
-            <Icon name="lock-reset" size={25} color="black" onPress={forgotPswd(auth().currentUser.email)}/>
+            <Icon name="lock-reset" size={25} color="black" onPress={()=>{forgotPswd(auth().currentUser.email)}}/>
         </View>
     );
 };
