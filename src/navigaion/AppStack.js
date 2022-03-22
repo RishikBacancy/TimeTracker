@@ -29,10 +29,11 @@ const AppStack = () =>
                 },
                 tabBarActiveTintColor: Colors.primaryColor,
                 tabBarInactiveTintColor: Colors.accentColor,
+                headerShown:false,
             })}>
-            <Stack.Screen name="Home" component={HomeScreen}/>
-            <Stack.Screen name="Feed" component={FeedScreen}/>
-            <Stack.Screen name="Profile" component={ProfileScreen}/>
+            <Tab.Screen name="Home" component={HomeScreen}/>
+            <Tab.Screen name="Feed" component={FeedScreen}/>
+            <Tab.Screen name="Profile" component={ProfileScreen}/>
         </Tab.Navigator>
     );
 }

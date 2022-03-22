@@ -1,5 +1,5 @@
 import React, {useContext} from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Alert } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import auth from "@react-native-firebase/auth";
 
@@ -10,10 +10,21 @@ const ProfileScreen = props =>
 
     const { user, forgotPswd } = useContext(AuthContext);
 
+    const resetHandler = () => {
+		forgotPswd(auth().currentUser.email);
+		Alert.alert('Password Reset', 'Password Reset link has been sent!', [
+			{
+				text: 'OK',
+				onPress: () => {},
+				style: 'cancel'
+			}
+		]);
+	};
+
     return(
         <View style={styles.screen}>
             <Text>Profile Screen</Text>
-            <Icon name="lock-reset" size={25} color="black" onPress={()=>{forgotPswd(auth().currentUser.email)}}/>
+            <Icon name="lock-reset" size={25} color="black" onPress={resetHandler}/>
         </View>
     );
 };
