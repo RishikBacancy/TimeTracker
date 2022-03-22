@@ -1,11 +1,22 @@
-import React, {useContext} from "react";
+import React, { useContext, useEffect } from "react";
 import { View, StyleSheet, Text} from "react-native";
 import SimpleButton from "../components/SimpleButton";
 import { AuthContext } from "../navigaion/AuthProvider";
+import HeaderButton from "../components/HeaderButton";
+import Card from "../components/Card";
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = props => {
 
     const {user, logout} = useContext(AuthContext);
+
+    useEffect(()=>{
+        props.navigation.setOptions({
+            headerRight: () => (
+                <HeaderButton
+                    iconName={"add-circle-outline"}/>
+            ),
+        })
+    },[props.navigation])
 
     const logOutHandler = () =>
     {
@@ -14,6 +25,7 @@ const HomeScreen = ({navigation}) => {
 
     return(
         <View style={styles.screen}>
+            <Card/>
             <Text>Home Screen</Text>
             <Text>{user.uid}</Text>
             <SimpleButton

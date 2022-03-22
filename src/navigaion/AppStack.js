@@ -29,7 +29,7 @@ const AppStack = () =>
                 },
                 tabBarActiveTintColor: Colors.primaryColor,
                 tabBarInactiveTintColor: Colors.accentColor,
-                headerShown:false,
+                headerShown:true,
             })}>
             <Tab.Screen name="Home" component={HomeScreen}/>
             <Tab.Screen name="Feed" component={FeedScreen}/>
