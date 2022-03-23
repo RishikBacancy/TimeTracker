@@ -1,12 +1,12 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity, Text} from "react-native";
 
-const SimpleButton = ({btnTitle,...extra}) =>
+const SimpleButton = (props) =>
 {
     return(
-        <TouchableOpacity style={styles.btnContainer} {...extra}>
+        <TouchableOpacity  {...props} style={[styles.btnContainer,props.style]}>
             <Text style={styles.textWrap}>
-                {btnTitle}
+                {props.btnTitle}
             </Text>
         </TouchableOpacity>
     );

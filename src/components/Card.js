@@ -4,8 +4,8 @@ import { Text, View, StyleSheet, Platform} from "react-native";
 const Card = props =>
 {
     return(
-        <View style={styles.cardContaiiner}>
-            <Text style={styles.textContainer}>Rishik Karanjiya</Text>
+        <View style={[ styles.cardContaiiner, props.style]}>
+            {props.children}
         </View>
     );
 };
@@ -13,13 +13,11 @@ const Card = props =>
 const styles = StyleSheet.create({
     cardContaiiner:{
         backgroundColor:"white",
+        borderRadius:7,
         elevation:10,
-        paddingVertical:10,
-        paddingHorizontal:10,
+        paddingVertical:15,
+        paddingHorizontal:15,
         justifyContent:"center",
-    },
-    textContainer:{
-        fontFamily:"Ubuntu-Regular"
     },
 });
 

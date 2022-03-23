@@ -3,6 +3,8 @@ import { Alert } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
+import firestore from '@react-native-firebase/firestore';
+import database from '@react-native-firebase/database';
 
 export const AuthContext = createContext();
 
@@ -78,6 +80,20 @@ export const AuthProvider = ({ children }) => {
 						console.log(e);
 					}
 				}
+
+				/*uploadData: async (name, email, password, phone ) => {
+					try {
+						await Firestore().collection("Users").doc(auth().user.uid).set({
+							name : name,
+							email : email,
+							password : password,
+							phone : phone,
+						});
+					} catch (e) {
+						console.log(e);
+					}
+
+				},*/
 			}}
 		>
 			{children}
