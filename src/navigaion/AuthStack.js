@@ -1,17 +1,9 @@
-<<<<<<< HEAD
 import React, {useEffect} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import SigninScreen from '../screens/SigninScreen';
 import SignupScreen from '../screens/SignupScreen';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-=======
-import React, {useEffect} from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import SigninScreen from "../screens/SigninScreen";
-import SignupScreen from "../screens/SignupScreen";
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
->>>>>>> 4f64a821e86b1d5801cf9e4274ff84897d40d8b0
+// import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -31,17 +23,4 @@ const AuthStack = () => {
   );
 };
 
-<<<<<<< HEAD
 export default AuthStack;
-=======
-    return(
-        <Stack.Navigator>
-            <Stack.Screen name="SignIn" component={SigninScreen}/>
-            <Stack.Screen name="SignUp" component={SignupScreen}/>
-            <Stack.Screen name="Forgot" component={ForgotPasswordScreen}/>
-        </Stack.Navigator>
-    );
-}
-
-export default AuthStack;
->>>>>>> 4f64a821e86b1d5801cf9e4274ff84897d40d8b0
