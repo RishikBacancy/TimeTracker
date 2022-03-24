@@ -16,6 +16,7 @@
 		750DC2806D554D47B5D893E6 /* Ubuntu-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 600A1B81D2BB442084838C4D /* Ubuntu-Medium.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		B42468EA028789560DB1DFBF /* libPods-TimeTracker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 85C1C9A95D525974575814F5 /* libPods-TimeTracker.a */; };
+		B96B79C427EC824700D4E64F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B96B79C327EC824700D4E64F /* GoogleService-Info.plist */; };
 		C5589A49BB15476B867AE4DE /* Ubuntu-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6BD8D7095EA44A3EA487796F /* Ubuntu-Regular.ttf */; };
 /* End PBXBuildFile section */
 
@@ -40,11 +41,12 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = TimeTracker/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = TimeTracker/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = TimeTracker/main.m; sourceTree = "<group>"; };
-		600A1B81D2BB442084838C4D /* Ubuntu-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Ubuntu-Medium.ttf"; path = "../assets/fonts/Ubuntu-Medium.ttf"; sourceTree = "<group>"; };
-		6BD8D7095EA44A3EA487796F /* Ubuntu-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Ubuntu-Regular.ttf"; path = "../assets/fonts/Ubuntu-Regular.ttf"; sourceTree = "<group>"; };
-		73717B3077EA4B5ABD39C0BF /* Ubuntu-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Ubuntu-Bold.ttf"; path = "../assets/fonts/Ubuntu-Bold.ttf"; sourceTree = "<group>"; };
+		600A1B81D2BB442084838C4D /* Ubuntu-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Ubuntu-Medium.ttf"; path = "../assets/fonts/Ubuntu-Medium.ttf"; sourceTree = "<group>"; };
+		6BD8D7095EA44A3EA487796F /* Ubuntu-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Ubuntu-Regular.ttf"; path = "../assets/fonts/Ubuntu-Regular.ttf"; sourceTree = "<group>"; };
+		73717B3077EA4B5ABD39C0BF /* Ubuntu-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Ubuntu-Bold.ttf"; path = "../assets/fonts/Ubuntu-Bold.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = TimeTracker/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		85C1C9A95D525974575814F5 /* libPods-TimeTracker.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TimeTracker.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B96B79C327EC824700D4E64F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BE1BEAE1F01C2158046591CC /* Pods-TimeTracker-TimeTrackerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeTracker-TimeTrackerTests.debug.xcconfig"; path = "Target Support Files/Pods-TimeTracker-TimeTrackerTests/Pods-TimeTracker-TimeTrackerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CCD64201ACE1596D066ACCC7 /* Pods-TimeTracker-TimeTrackerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeTracker-TimeTrackerTests.release.xcconfig"; path = "Target Support Files/Pods-TimeTracker-TimeTrackerTests/Pods-TimeTracker-TimeTrackerTests.release.xcconfig"; sourceTree = "<group>"; };
 		E551D055DA9A3A7BDE730ED9 /* Pods-TimeTracker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeTracker.debug.xcconfig"; path = "Target Support Files/Pods-TimeTracker/Pods-TimeTracker.debug.xcconfig"; sourceTree = "<group>"; };
@@ -120,7 +122,6 @@
 				6BD8D7095EA44A3EA487796F /* Ubuntu-Regular.ttf */,
 			);
 			name = Resources;
-			path = "";
 			sourceTree = "<group>";
 		};
 		57AED1EE31C55538EDDE0775 /* Pods */ = {
@@ -131,7 +132,6 @@
 				BE1BEAE1F01C2158046591CC /* Pods-TimeTracker-TimeTrackerTests.debug.xcconfig */,
 				CCD64201ACE1596D066ACCC7 /* Pods-TimeTracker-TimeTrackerTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -145,6 +145,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				B96B79C327EC824700D4E64F /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* TimeTracker */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* TimeTrackerTests */,
@@ -267,6 +268,7 @@
 				1102BD6F3EA747278689DB6C /* Ubuntu-Bold.ttf in Resources */,
 				750DC2806D554D47B5D893E6 /* Ubuntu-Medium.ttf in Resources */,
 				C5589A49BB15476B867AE4DE /* Ubuntu-Regular.ttf in Resources */,
+				B96B79C427EC824700D4E64F /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
