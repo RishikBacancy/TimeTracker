@@ -39,11 +39,15 @@ const SigninScreen = ({navigation}) => {
     <View style={styles.screen}>
       <Text style={styles.textWrap}>Signin</Text>
 
+<<<<<<< HEAD
       <Image
         source={require('../../assets/logo.png')}
         resizeMode="contain"
         style={styles.logoContainer}
       />
+=======
+			<Image source={require('../../assets/logo.png')} resizeMode="contain" style={styles.logoContainer} />
+>>>>>>> 4f64a821e86b1d5801cf9e4274ff84897d40d8b0
 
       <View style={styles.formContainer}>
         <InputField
@@ -62,8 +66,17 @@ const SigninScreen = ({navigation}) => {
           inputValue={password}
         />
 
+<<<<<<< HEAD
         <SimpleButton btnTitle={'SignIn'} onPress={signInHandler} />
       </View>
+=======
+				<TouchableOpacity onPress={() => navigation.navigate('Forgot')}>
+					<Text style={styles.simpleText}>Forgot Password?</Text>
+				</TouchableOpacity>
+
+				<SimpleButton btnTitle={'SignIn'} onPress={signInHandler} />
+			</View>
+>>>>>>> 4f64a821e86b1d5801cf9e4274ff84897d40d8b0
 
       <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
         <Text style={styles.simpleText}>Don't have an acount? Create here</Text>
@@ -86,6 +99,7 @@ const SigninScreen = ({navigation}) => {
           onPress={() => googleLogin()}
         />
 
+<<<<<<< HEAD
         {Platform.OS === 'android' ? (
           <SocialButton
             iconName={'apple'}
@@ -98,6 +112,20 @@ const SigninScreen = ({navigation}) => {
       </View>
     </View>
   );
+=======
+				{Platform.OS === 'ios' ? (
+					<SocialButton
+						iconName={'apple'}
+						iconColor={'black'}
+						btnBgColor={'#ccc'}
+						btnTitle={'Signin With Apple'}
+						onPress={() => {}}
+					/>
+				) : null}
+			</View>
+		</View>
+	);
+>>>>>>> 4f64a821e86b1d5801cf9e4274ff84897d40d8b0
 };
 
 const styles = StyleSheet.create({
