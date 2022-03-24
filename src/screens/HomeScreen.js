@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, {useContext} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import SimpleButton from '../components/SimpleButton';
@@ -26,7 +25,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-=======
+
 import React, { useContext, useEffect } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import SimpleButton from '../components/SimpleButton';
