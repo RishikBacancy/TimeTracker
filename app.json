@@ -1,4 +1,5 @@
 {
   "name": "TimeTracker",
-  "displayName": "TimeTracker"
+  "displayName": "TimeTracker",
+  "usesAppleSignIn": true
 }

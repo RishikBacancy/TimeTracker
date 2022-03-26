@@ -17,7 +17,7 @@ const SigninScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const {login, googleLogin, fbLogin} = useContext(AuthContext);
+  const {login, googleLogin, fbLogin, appleLogin} = useContext(AuthContext);
 
   const signInHandler = () => {
     if (email === '' || password === '') {
@@ -96,7 +96,7 @@ const SigninScreen = ({navigation}) => {
             iconColor={'black'}
             btnBgColor={'#ccc'}
             btnTitle={'Signin With Apple'}
-            onPress={() => {}}
+            onPress={() => appleLogin()}
           />
         ) : null}
       </View>
