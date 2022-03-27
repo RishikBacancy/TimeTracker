@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState,  useRef } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import { View, Text, StyleSheet, Alert, Modal, Image } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -16,9 +16,9 @@ const ProfileScreen = (props) => {
 	const [ uEmail, setUEmail ] = useState('');
 	const [ uPhone, setUPhone ] = useState('');
 
-	const [ pic, setPic ] = useState('');
+	const [ pic, setPic ] = useState(null);
 
-	let uriImage;
+	//let uriImage = {};
 
 	const user = auth().currentUser.uid;
 
@@ -30,7 +30,6 @@ const ProfileScreen = (props) => {
 		() => {
 			firestore().collection('Users').doc(user).get().then((documentSnapshot) => {
 				if (documentSnapshot.exists) {
-
 					let userData = {};
 
 					//console.log(documentSnapshot.get('userData'));
@@ -44,7 +43,7 @@ const ProfileScreen = (props) => {
 				}
 			});
 		},
-		[ user]
+		[ user ]
 	);
 
 	const resetHandler = () => {
@@ -65,16 +64,18 @@ const ProfileScreen = (props) => {
 				includeBase64: false,
 				maxHeight: 200,
 				maxWidth: 200,
-				saveToPhotos: true,
+				saveToPhotos: false
 			},
 			(response) => {
 				console.log(response);
-				
-				uriImage = response.assets.map(({uri})=>(uri));
+
+				let uriImage = { uri: response.assets.map(({ uri }) => uri) };
+				console.log('=================\n' + uriImage);
+				setPic(uriImage.uri[0]);
 			}
 		);
 		setModalBtn(false);
-		setPic(uriImage);
+		//setPic(uriImage);
 		console.log('=================\n');
 		console.log(pic);
 	};
@@ -86,30 +87,27 @@ const ProfileScreen = (props) => {
 				maxWidth: 200,
 				selectionLimit: 0,
 				mediaType: 'photo',
-				includeBase64: false,
+				includeBase64: false
 			},
 			(response) => {
-				console.log(typeof(response.uri));
+				//console.log(typeof(response.uri));
 				//console.log(response.assets.map(({uri})=>(uri)));
 				console.log('=================\n' + uriImage);
-				uriImage = response.assets.map(({uri})=>(uri));
+				let uriImage = { uri: response.assets.map(({ uri }) => uri) };
 				//setPic(response.uri);
 				//firestore.collection("Users").doc(user).
-				console.log('=================\n' + typeof(uriImage));
+				console.log('=================\n' + uriImage);
+				setPic(uriImage.uri[0]);
 			}
-			
 		);
 		setModalBtn(false);
-		
+
 		console.log('=================\n');
 		console.log(pic);
 		//setPic(uriImage.file);
 	};
 
-	const editMenuHandler = () =>
-	{
-
-	};
+	const editMenuHandler = () => {};
 
 	return (
 		<View style={styles.screen}>
@@ -130,12 +128,21 @@ const ProfileScreen = (props) => {
 			<Card style={styles.cardWrap}>
 				<View style={styles.profilePicture}>
 					<View style={styles.profileWrap}>
-						<Image
-							style={styles.profilePicContainer}
-							//source={require('../../assets/blankPic.png')}
-							source={{uri:uriImage}}
-							resizeMode="cover"
-						/>
+						{pic === null ? (
+							<Image
+								style={styles.profilePicContainer}
+								source={require('../../assets/blankPic.png')}
+								//source = {{pic}}
+								resizeMode="cover"
+							/>
+						) : (
+							<Image
+								style={styles.profilePicContainer}
+								//source={require('../../assets/blankPic.png')}
+								source={{ uri: pic }}
+								resizeMode="cover"
+							/>
+						)}
 					</View>
 					<View style={styles.editImage}>
 						<Icon name="ios-add-circle" size={25} color={'black'} onPress={() => setModalBtn(true)} />
@@ -145,27 +152,27 @@ const ProfileScreen = (props) => {
 				<View style={styles.dataField}>
 					<Text style={styles.titleText}>Name :</Text>
 					<Text ellipsizeMode="tail" numberOfLines={1} style={styles.detailText}>
-						{uName === null ? "Enter your Name" : uName}
+						{uName === null ? 'Enter your Name' : uName}
 					</Text>
 				</View>
 
 				<View style={styles.dataField}>
 					<Text style={styles.titleText}>Email :</Text>
 					<Text ellipsizeMode="tail" numberOfLines={1} style={styles.detailText}>
-						{uEmail === null ? "Enter your Email" : uEmail}
+						{uEmail === null ? 'Enter your Email' : uEmail}
 					</Text>
 				</View>
 
 				<View style={styles.dataField}>
 					<Text style={styles.titleText}>Phone :</Text>
 					<Text ellipsizeMode="tail" numberOfLines={1} style={styles.detailText}>
-						{uPhone === null ? "Enter your Phone" : uPhone}
+						{uPhone === null ? 'Enter your Phone' : uPhone}
 					</Text>
 				</View>
 
 				<SimpleButton style={styles.btnWrap} btnTitle={'LogOut'} onPress={() => logout()} />
 				<View style={styles.editBtn}>
-					<Icon name='ios-create-outline' size={25} color={Colors.accentColor} onPress={editMenuHandler}/>
+					<Icon name="ios-create-outline" size={25} color={Colors.accentColor} onPress={editMenuHandler} />
 				</View>
 			</Card>
 			<Text>Profile Screen</Text>
@@ -244,10 +251,10 @@ const styles = StyleSheet.create({
 	btnWrap: {
 		alignSelf: 'center'
 	},
-	editBtn:{
-		position:"absolute",
-		top:10,
-		right:10,
+	editBtn: {
+		position: 'absolute',
+		top: 10,
+		right: 10
 	}
 });
 
