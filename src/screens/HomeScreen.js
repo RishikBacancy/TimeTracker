@@ -17,9 +17,9 @@ const HomeScreen = (props) => {
 				headerRight: () => <HeaderButton iconName={'add-circle-outline'} />
 			});
 
-			firestore().collection('Users').doc(cUser.uid).set({
+			/*firestore().collection('Users').doc(cUser.uid).set({
 				email: cUser.email ,
-			});
+			});*/
 		},
 		[ props.navigation, cUser ]
 	);
