@@ -30,17 +30,37 @@ export const AuthProvider = ({ children }) => {
 						const { idToken } = await GoogleSignin.signIn();
 						const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 						return auth().signInWithCredential(googleCredential).then((data)=>{
-							let userData = {};
 							
-							userData.name = data.user.displayName;
-							userData.email = data.user.email.toLowerCase();
-							userData.phone = data.user.phoneNumber;
+							let userData = {};
 
-							console.log(userData);
+							firestore().collection("Users").doc(auth().currentUser.uid).get().then((snap)=>{
+								if(snap.exists){
+									//console.log(snap.get("userData"));
+									userData = snap.get("userData");
+									console.log(userData)
+									firestore().collection("Users").doc(auth().currentUser.uid).set({
+										userData
+									});
+								}else{
+									console.log("yesss else part!");
+									userData.name = data.user.displayName;
+									//console.log(userData.name);
+									userData.name = data.user.displayName;
+									userData.email = data.user.email.toLowerCase();
+									userData.phone = data.user.phoneNumber;
 
-							firestore().collection("Users").doc(auth().currentUser.uid).set({
-								userData
+									firestore().collection("Users").doc(auth().currentUser.uid).set({
+										userData
+									});
+
+								}
 							});
+
+							//console.log(userData.name);
+
+							//firestore().collection("Users").doc(auth().currentUser.uid).set({
+								//userData
+							//});
 						});
 					} catch (e) {
 						console.log({ e });
@@ -63,18 +83,35 @@ export const AuthProvider = ({ children }) => {
 
 						const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
 
+
 						return auth().signInWithCredential(facebookCredential).then((data)=>{
 							let userData = {};
 							
-							userData.name = data.user.displayName;
-							userData.email = data.user.email.toLowerCase();
-							userData.phone = data.user.phoneNumber;
+							//userData.name = data.user.displayName;
+							//userData.email = data.user.email.toLowerCase();
+							//userData.phone = data.user.phoneNumber;
 
-							console.log(userData);
+							firestore().collection("Users").doc(auth().currentUser.uid).get().then((snap)=>{
+								if(snap.exists){
+									//console.log(snap.get("userData"));
+									userData = snap.get("userData");
+									firestore().collection("Users").doc(auth().currentUser.uid).set({
+										userData
+									});
+								}else{
+									userData.name = data.user.displayName;
+									userData.email = data.user.email.toLowerCase();
+									userData.phone = data.user.phoneNumber;
 
-							firestore().collection("Users").doc(auth().currentUser.uid).set({
-								userData
+									firestore().collection("Users").doc(auth().currentUser.uid).set({
+										userData
+									});
+								}
 							});
+
+							//console.log(userData);
+
+							
 						});
 					} catch (e) {
 						console.log({ e });
@@ -116,7 +153,7 @@ export const AuthProvider = ({ children }) => {
 					} catch (e) {
 						console.log(e);
 					}
-				}
+				},
 
 				/*uploadData: async (name, email, password, phone ) => {
 					try {

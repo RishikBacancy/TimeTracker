@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
-import { View, Text, StyleSheet, Alert, Modal, Image } from 'react-native';
+import { View, Text, StyleSheet, Alert, Modal, Image, TextInput } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { AuthContext } from '../navigaion/AuthProvider';
@@ -17,14 +17,16 @@ const ProfileScreen = (props) => {
 	const [ uPhone, setUPhone ] = useState('');
 
 	const [ pic, setPic ] = useState(null);
+	const [ basePic, setBasePic] = useState(null);
 
 	//let uriImage = {};
 
 	const user = auth().currentUser.uid;
 
 	const [ modalBtn, setModalBtn ] = useState(false);
+	const [ editMode, setEditMode ] = useState(false);
 
-	const [ response, setResponse ] = useState(null);
+	//const [ response, setResponse ] = useState(null);
 
 	useEffect(
 		() => {
@@ -34,7 +36,7 @@ const ProfileScreen = (props) => {
 
 					//console.log(documentSnapshot.get('userData'));
 					userData = documentSnapshot.get('userData');
-
+					//console.log(documentSnapshot.get("profileImage"));
 					//console.log(userData)
 
 					setUName(userData.name);
@@ -42,9 +44,19 @@ const ProfileScreen = (props) => {
 					setUPhone(userData.phone);
 				}
 			});
+
 		},
-		[ user ]
+		[ user]
 	);
+
+	useEffect(()=>{
+		if( basePic != null){
+			firestore().collection("Users").doc(user).update({
+				profileImage: firestore.Blob.fromBase64String(basePic[0])
+			})
+		}
+	},[basePic]);
+
 
 	const resetHandler = () => {
 		forgotPswd(auth().currentUser.email);
@@ -87,27 +99,44 @@ const ProfileScreen = (props) => {
 				maxWidth: 200,
 				selectionLimit: 0,
 				mediaType: 'photo',
-				includeBase64: false
+				includeBase64: true,
 			},
 			(response) => {
 				//console.log(typeof(response.uri));
-				//console.log(response.assets.map(({uri})=>(uri)));
-				console.log('=================\n' + uriImage);
+				//console.log(response.assets.map(({ base64 }) => (base64)));
+				//console.log('=================\n' + uriImage);
 				let uriImage = { uri: response.assets.map(({ uri }) => uri) };
+				
+				//setBasePic(response.assets.map(({ base64 }) => (base64)));
 				//setPic(response.uri);
 				//firestore.collection("Users").doc(user).
-				console.log('=================\n' + uriImage);
+
+				//console.log('=================\n' + uriImage);
+				//console.log(response.assets.find("base64"));
 				setPic(uriImage.uri[0]);
 			}
 		);
 		setModalBtn(false);
 
 		console.log('=================\n');
-		console.log(pic);
+		//console.log(pic);
 		//setPic(uriImage.file);
 	};
 
-	const editMenuHandler = () => {};
+	const updateHandler = () => 
+	{
+		let userData= {};
+
+		userData.name = uName;
+		userData.email = uEmail;
+		userData.phone = uPhone;
+
+		firestore().collection("Users").doc(user).update({
+			userData
+		});
+
+		setEditMode(false);
+	};
 
 	return (
 		<View style={styles.screen}>
@@ -151,29 +180,58 @@ const ProfileScreen = (props) => {
 
 				<View style={styles.dataField}>
 					<Text style={styles.titleText}>Name :</Text>
-					<Text ellipsizeMode="tail" numberOfLines={1} style={styles.detailText}>
-						{uName === null ? 'Enter your Name' : uName}
-					</Text>
+					{editMode ? (
+						<TextInput
+							style={styles.detailEditText}
+							placeholder="Full Name"
+							onChangeText={(data) => setUName(data)}
+							value={uName}
+							numberOfLines={1}
+							placeholderTextColor="#ccc"
+						/>
+					) : (
+						<Text ellipsizeMode="tail" numberOfLines={1} style={styles.detailText}>
+							{uName === null ? '-' : uName}
+						</Text>
+					)}
 				</View>
 
 				<View style={styles.dataField}>
 					<Text style={styles.titleText}>Email :</Text>
 					<Text ellipsizeMode="tail" numberOfLines={1} style={styles.detailText}>
-						{uEmail === null ? 'Enter your Email' : uEmail}
+						{uEmail === null ? '-' : uEmail}
 					</Text>
 				</View>
 
 				<View style={styles.dataField}>
 					<Text style={styles.titleText}>Phone :</Text>
-					<Text ellipsizeMode="tail" numberOfLines={1} style={styles.detailText}>
-						{uPhone === null ? 'Enter your Phone' : uPhone}
-					</Text>
+					{editMode ? (
+						<TextInput
+							style={styles.detailEditText}
+							placeholder="Phone Number"
+							onChangeText={(data) => setUPhone(data)}
+							value={uPhone}
+							numberOfLines={1}
+							placeholderTextColor="#ccc"
+						/>
+						
+					) : (
+						<Text ellipsizeMode="tail" numberOfLines={1} style={styles.detailText}>
+							{uPhone === null ? '-' : uPhone}
+						</Text>
+					)}
 				</View>
 
-				<SimpleButton style={styles.btnWrap} btnTitle={'LogOut'} onPress={() => logout()} />
+				{editMode ? (
+					<SimpleButton style={styles.btnWrap} btnTitle={'Update'} onPress={updateHandler} />
+				) : (
+					<SimpleButton style={styles.btnWrap} btnTitle={'LogOut'} onPress={() => logout()} />
+				)}
+
 				<View style={styles.editBtn}>
-					<Icon name="ios-create-outline" size={25} color={Colors.accentColor} onPress={editMenuHandler} />
+					<Icon name="ios-create-outline" size={25} color={Colors.accentColor} onPress={()=>setEditMode(true)} />
 				</View>
+
 			</Card>
 			<Text>Profile Screen</Text>
 			<Icon name="key" size={25} color="black" onPress={resetHandler} />
@@ -247,6 +305,16 @@ const styles = StyleSheet.create({
 		color: Colors.accentColor,
 		marginHorizontal: 5,
 		flex: 3
+	},
+	detailEditText:{
+		fontFamily: 'Ubuntu-Regular',
+		fontSize: 19,
+		color: Colors.accentColor,
+		flex: 3,
+		borderBottomWidth: 1,
+		height: 40,
+		marginVertical:-5,
+		borderColor: Colors.primaryColor,
 	},
 	btnWrap: {
 		alignSelf: 'center'
