@@ -4,7 +4,7 @@ import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
 import {appleAuth} from '@invertase/react-native-apple-authentication';
-// import firestore from '@react-native-firebase/firestore';
+import firestore from '@react-native-firebase/firestore';
 // import database from '@react-native-firebase/database';
 
 export const AuthContext = createContext();
@@ -31,7 +31,49 @@ export const AuthProvider = ({children}) => {
             const {idToken} = await GoogleSignin.signIn();
             const googleCredential =
               auth.GoogleAuthProvider.credential(idToken);
-            return auth().signInWithCredential(googleCredential);
+            return auth()
+              .signInWithCredential(googleCredential)
+              .then(data => {
+                let userData = {};
+
+                firestore()
+                  .collection('Users')
+                  .doc(auth().currentUser.uid)
+                  .get()
+                  .then(snap => {
+                    if (snap.exists) {
+                      //console.log(snap.get("userData"));
+                      userData = snap.get('userData');
+                      console.log(userData);
+                      firestore()
+                        .collection('Users')
+                        .doc(auth().currentUser.uid)
+                        .set({
+                          userData,
+                        });
+                    } else {
+                      console.log('yesss else part!');
+                      userData.name = data.user.displayName;
+                      //console.log(userData.name);
+                      userData.name = data.user.displayName;
+                      userData.email = data.user.email.toLowerCase();
+                      userData.phone = data.user.phoneNumber;
+
+                      firestore()
+                        .collection('Users')
+                        .doc(auth().currentUser.uid)
+                        .set({
+                          userData,
+                        });
+                    }
+                  });
+
+                //console.log(userData.name);
+
+                //firestore().collection("Users").doc(auth().currentUser.uid).set({
+                //userData
+                //});
+              });
           } catch (e) {
             console.log({e});
           }
@@ -89,7 +131,49 @@ export const AuthProvider = ({children}) => {
               data.accessToken,
             );
 
-            return auth().signInWithCredential(facebookCredential);
+            return auth()
+              .signInWithCredential(facebookCredential)
+              .then(fb_data => {
+                let userData = {};
+
+                firestore()
+                  .collection('Users')
+                  .doc(auth().currentUser.uid)
+                  .get()
+                  .then(snap => {
+                    if (snap.exists) {
+                      //console.log(snap.get("userData"));
+                      userData = snap.get('userData');
+                      console.log(userData);
+                      firestore()
+                        .collection('Users')
+                        .doc(auth().currentUser.uid)
+                        .set({
+                          userData,
+                        });
+                    } else {
+                      console.log('yesss else part!');
+                      userData.name = fb_data.user.displayName;
+                      //console.log(userData.name);
+                      userData.name = fb_data.user.displayName;
+                      userData.email = fb_data.user.email.toLowerCase();
+                      userData.phone = fb_data.user.phoneNumber;
+
+                      firestore()
+                        .collection('Users')
+                        .doc(auth().currentUser.uid)
+                        .set({
+                          userData,
+                        });
+                    }
+                  });
+
+                //console.log(userData.name);
+
+                //firestore().collection("Users").doc(auth().currentUser.uid).set({
+                //userData
+                //});
+              });
           } catch (e) {
             console.log({e});
           }

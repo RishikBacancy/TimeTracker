@@ -31,8 +31,7 @@ const SignUpScreen = ({navigation}) => {
       console.log(phone);
       console.log(email);
       console.log(password);
-
-      register(email, password);
+      register(name, email, password, phone);
 
       setName('');
       setPhone('');
