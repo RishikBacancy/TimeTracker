@@ -29,7 +29,6 @@ const SigninScreen = ({ navigation }) => {
 
 	return (
 		<View style={styles.screen}>
-			<Text style={styles.textWrap}>Signin</Text>
 
 			<Image source={require('../../assets/logo.png')} resizeMode="contain" style={styles.logoContainer} />
 
@@ -40,6 +39,7 @@ const SigninScreen = ({ navigation }) => {
 					keyboardType="email-address"
 					onChangeText={(data) => setEmail(data)}
 					inputValue={email}
+					numberOfLines={1}
 				/>
 
 				<InputField
@@ -48,6 +48,7 @@ const SigninScreen = ({ navigation }) => {
 					secureTextEntry={true}
 					onChangeText={(data) => setPassword(data)}
 					inputValue={password}
+					numberOfLines={1}
 				/>
 
 				<TouchableOpacity onPress={() => navigation.navigate('Forgot')}>

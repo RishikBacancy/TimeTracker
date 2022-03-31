@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
 								if(snap.exists){
 									//console.log(snap.get("userData"));
 									userData = snap.get("userData");
-									console.log(userData)
+									//console.log(userData)
 									firestore().collection("Users").doc(auth().currentUser.uid).set({
 										userData
 									});

@@ -17,7 +17,7 @@ const ProfileScreen = (props) => {
 	const [ uPhone, setUPhone ] = useState('');
 
 	const [ pic, setPic ] = useState(null);
-	const [ basePic, setBasePic] = useState(null);
+	const [ basePic, setBasePic ] = useState(null);
 
 	//let uriImage = {};
 
@@ -44,19 +44,20 @@ const ProfileScreen = (props) => {
 					setUPhone(userData.phone);
 				}
 			});
-
 		},
-		[ user]
+		[ user ]
 	);
 
-	useEffect(()=>{
-		if( basePic != null){
-			firestore().collection("Users").doc(user).update({
-				profileImage: firestore.Blob.fromBase64String(basePic[0])
-			})
-		}
-	},[basePic]);
-
+	useEffect(
+		() => {
+			if (basePic != null) {
+				firestore().collection('Users').doc(user).update({
+					profileImage: firestore.Blob.fromBase64String(basePic[0])
+				});
+			}
+		},
+		[ basePic ]
+	);
 
 	const resetHandler = () => {
 		forgotPswd(auth().currentUser.email);
@@ -99,14 +100,14 @@ const ProfileScreen = (props) => {
 				maxWidth: 200,
 				selectionLimit: 0,
 				mediaType: 'photo',
-				includeBase64: true,
+				includeBase64: true
 			},
 			(response) => {
 				//console.log(typeof(response.uri));
 				//console.log(response.assets.map(({ base64 }) => (base64)));
 				//console.log('=================\n' + uriImage);
 				let uriImage = { uri: response.assets.map(({ uri }) => uri) };
-				
+
 				//setBasePic(response.assets.map(({ base64 }) => (base64)));
 				//setPic(response.uri);
 				//firestore.collection("Users").doc(user).
@@ -123,15 +124,14 @@ const ProfileScreen = (props) => {
 		//setPic(uriImage.file);
 	};
 
-	const updateHandler = () => 
-	{
-		let userData= {};
+	const updateHandler = () => {
+		let userData = {};
 
 		userData.name = uName;
 		userData.email = uEmail;
 		userData.phone = uPhone;
 
-		firestore().collection("Users").doc(user).update({
+		firestore().collection('Users').doc(user).update({
 			userData
 		});
 
@@ -141,16 +141,18 @@ const ProfileScreen = (props) => {
 	return (
 		<View style={styles.screen}>
 			<Modal animationType="slide" visible={modalBtn} transparent={true}>
-				<View style={styles.modalContainer}>
-					<SimpleButton style={styles.modalBtn} btnTitle="Open Camera" onPress={cameraHandler} />
-					<SimpleButton style={styles.modalBtn} btnTitle="Choose from Library" onPress={libraryHandler} />
-					<SimpleButton
-						style={styles.modalBtn}
-						btnTitle="Cancel"
-						onPress={() => {
-							setModalBtn(false);
-						}}
-					/>
+				<View style={styles.modalWrap}>
+					<View style={styles.modalContainer}>
+						<SimpleButton style={styles.modalBtn} btnTitle="Open Camera" onPress={cameraHandler} />
+						<SimpleButton style={styles.modalBtn} btnTitle="Choose from Library" onPress={libraryHandler} />
+						<SimpleButton
+							style={styles.modalBtn}
+							btnTitle="Cancel"
+							onPress={() => {
+								setModalBtn(false);
+							}}
+						/>
+					</View>
 				</View>
 			</Modal>
 
@@ -214,7 +216,6 @@ const ProfileScreen = (props) => {
 							numberOfLines={1}
 							placeholderTextColor="#ccc"
 						/>
-						
 					) : (
 						<Text ellipsizeMode="tail" numberOfLines={1} style={styles.detailText}>
 							{uPhone === null ? '-' : uPhone}
@@ -229,12 +230,15 @@ const ProfileScreen = (props) => {
 				)}
 
 				<View style={styles.editBtn}>
-					<Icon name="ios-create-outline" size={25} color={Colors.accentColor} onPress={()=>setEditMode(true)} />
+					<Icon
+						name="ios-create-outline"
+						size={25}
+						color={Colors.accentColor}
+						onPress={() => setEditMode(true)}
+					/>
 				</View>
-
 			</Card>
-			<Text>Profile Screen</Text>
-			<Icon name="key" size={25} color="black" onPress={resetHandler} />
+			<SimpleButton btnTitle={'Reset password'} onPress={resetHandler} />
 		</View>
 	);
 };
@@ -242,11 +246,16 @@ const ProfileScreen = (props) => {
 const styles = StyleSheet.create({
 	screen: {
 		flex: 1,
-		justifyContent: 'center',
+		justifyContent: 'space-around',
 		alignItems: 'center'
 	},
+	modalWrap:{
+		flex:1,
+		justifyContent:"flex-end",
+		alignItems:"center",
+		backgroundColor:"rgba(54,54,54,0.5)"
+	},
 	modalContainer: {
-		marginTop: '128%',
 		width: '100%',
 		height: '30%',
 		borderColor: '#ccc',
@@ -306,15 +315,15 @@ const styles = StyleSheet.create({
 		marginHorizontal: 5,
 		flex: 3
 	},
-	detailEditText:{
+	detailEditText: {
 		fontFamily: 'Ubuntu-Regular',
 		fontSize: 19,
 		color: Colors.accentColor,
 		flex: 3,
 		borderBottomWidth: 1,
 		height: 40,
-		marginVertical:-5,
-		borderColor: Colors.primaryColor,
+		marginVertical: -5,
+		borderColor: Colors.primaryColor
 	},
 	btnWrap: {
 		alignSelf: 'center'
