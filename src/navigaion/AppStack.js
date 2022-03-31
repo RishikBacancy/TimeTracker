@@ -5,6 +5,8 @@ import FeedScreen from '../screens/FeedScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import MessagesScreen from '../screens/MessagesScreen';
 import ChatScreen from '../screens/ChatScreen';
+import TimeTracking from '../screens/TimeTracking';
+
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../Constants/Colors';
@@ -50,6 +52,7 @@ const AppStack = () => {
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Feed" component={MessageStack} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen name="Time" component={TimeTracking} />
     </Tab.Navigator>
   );
 };
