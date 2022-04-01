@@ -3,13 +3,11 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeScreen from '../screens/HomeScreen';
 import FeedScreen from '../screens/FeedScreen';
 import ProfileScreen from '../screens/ProfileScreen';
-import MessagesScreen from '../screens/MessagesScreen';
-import ChatScreen from '../screens/ChatScreen';
-import TimeTracking from '../screens/TimeTracking';
-
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../Constants/Colors';
+import ChatScreen from '../screens/ChatScreen';
+import MessagesScreen from '../screens/MessagesScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -37,7 +35,7 @@ const AppStack = () => {
 
           if (route.name === 'Home') {
             iconName = focused ? 'ios-home' : 'ios-home-outline';
-          } else if (route.name === 'Feed') {
+          } else if (route.name === 'Message') {
             iconName = focused ? 'ios-albums' : 'ios-albums-outline';
           } else if (route.name === 'Profile') {
             iconName = focused ? 'ios-person' : 'ios-person-outline';
@@ -50,9 +48,14 @@ const AppStack = () => {
         headerShown: true,
       })}>
       <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Feed" component={MessageStack} />
+      <Tab.Screen
+        name="Message"
+        component={MessageStack}
+        options={({route}) => ({
+          headerShown: false,
+        })}
+      />
       <Tab.Screen name="Profile" component={ProfileScreen} />
-      <Tab.Screen name="Time" component={TimeTracking} />
     </Tab.Navigator>
   );
 };

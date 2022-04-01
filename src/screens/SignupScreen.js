@@ -24,7 +24,7 @@ const SignUpScreen = ({ navigation }) => {
 			console.log(email);
 			console.log(password);
 
-			register(email, password);
+			register(name, email, password, phone);
 
 			setName('');
 			setPhone('');
@@ -35,7 +35,6 @@ const SignUpScreen = ({ navigation }) => {
 
 	return (
 		<View style={styles.screen}>
-			<Text style={styles.textWrap}>Signin</Text>
 
 			<Image source={require('../../assets/logo.png')} resizeMode="contain" style={styles.logoContainer} />
 
@@ -45,6 +44,7 @@ const SignUpScreen = ({ navigation }) => {
 					placeholder="Full Name"
 					onChangeText={(data) => setName(data)}
 					inputValue={name}
+					numberOfLines={1}
 				/>
 
 				<InputField
@@ -53,6 +53,7 @@ const SignUpScreen = ({ navigation }) => {
 					keyboardType="phone-pad"
 					onChangeText={(data) => setPhone(data)}
 					inputValue={phone}
+					numberOfLines={1}
 				/>
 
 				<InputField
@@ -61,6 +62,7 @@ const SignUpScreen = ({ navigation }) => {
 					keyboardType="email-address"
 					onChangeText={(data) => setEmail(data)}
 					inputValue={email}
+					numberOfLines={1}
 				/>
 
 				<InputField
@@ -69,6 +71,7 @@ const SignUpScreen = ({ navigation }) => {
 					secureTextEntry={true}
 					onChangeText={(data) => setPassword(data)}
 					inputValue={password}
+					numberOfLines={1}
 				/>
 
 				<SimpleButton btnTitle={'SignUp'} onPress={signUpHandler} />
@@ -83,7 +86,7 @@ const SignUpScreen = ({ navigation }) => {
 					iconName={'facebook-official'}
 					iconColor={'#4267B2'}
 					btnBgColor={'#c7d9fc'}
-					btnTitle={'Signin With Facebook'}
+					btnTitle={'Signup With Facebook'}
 					onPress={() => fbLogin()}
 				/>
 
@@ -91,7 +94,7 @@ const SignUpScreen = ({ navigation }) => {
 					iconName={'google'}
 					iconColor={'#EA4335'}
 					btnBgColor={'#fcc9c5'}
-					btnTitle={'Signin With Gmail'}
+					btnTitle={'Signup With Gmail'}
 					onPress={() => googleLogin()}
 				/>
 
@@ -100,7 +103,7 @@ const SignUpScreen = ({ navigation }) => {
 						iconName={'apple'}
 						iconColor={'black'}
 						btnBgColor={'#ccc'}
-						btnTitle={'Signin With Apple'}
+						btnTitle={'Signup With Apple'}
 						onPress={() => {}}
 					/>
 				) : null}
