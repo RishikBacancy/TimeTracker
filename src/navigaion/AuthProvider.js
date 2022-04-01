@@ -3,7 +3,6 @@ import React, {createContext, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
-import {appleAuth} from '@invertase/react-native-apple-authentication';
 import firestore from '@react-native-firebase/firestore';
 // import database from '@react-native-firebase/database';
 
@@ -44,7 +43,7 @@ export const AuthProvider = ({children}) => {
                     if (snap.exists) {
                       //console.log(snap.get("userData"));
                       userData = snap.get('userData');
-                      console.log(userData);
+                      //console.log(userData)
                       firestore()
                         .collection('Users')
                         .doc(auth().currentUser.uid)
@@ -79,37 +78,6 @@ export const AuthProvider = ({children}) => {
           }
         },
 
-        appleLogin: async () => {
-          try {
-            const appleAuthRequestResponse = await appleAuth.performRequest({
-              requestedOperation: appleAuth.Operation.LOGIN,
-              requestedScopes: [
-                appleAuth.Scope.EMAIL,
-                appleAuth.Scope.FULL_NAME,
-              ],
-            });
-
-            // Ensure Apple returned a user identityToken
-            if (!appleAuthRequestResponse.identityToken) {
-              throw new Error(
-                'Apple Sign-In failed - no identify token returned',
-              );
-            }
-
-            // Create a Firebase credential from the response
-            const {identityToken, nonce} = appleAuthRequestResponse;
-            const appleCredential = auth.AppleAuthProvider.credential(
-              identityToken,
-              nonce,
-            );
-
-            // Sign the user in with the credential
-            return auth().signInWithCredential(appleCredential);
-          } catch (e) {
-            console.log({e});
-          }
-        },
-
         fbLogin: async () => {
           try {
             const result = await LoginManager.logInWithPermissions([
@@ -136,6 +104,10 @@ export const AuthProvider = ({children}) => {
               .then(fb_data => {
                 let userData = {};
 
+                //userData.name = data.user.displayName;
+                //userData.email = data.user.email.toLowerCase();
+                //userData.phone = data.user.phoneNumber;
+
                 firestore()
                   .collection('Users')
                   .doc(auth().currentUser.uid)
@@ -144,7 +116,6 @@ export const AuthProvider = ({children}) => {
                     if (snap.exists) {
                       //console.log(snap.get("userData"));
                       userData = snap.get('userData');
-                      console.log(userData);
                       firestore()
                         .collection('Users')
                         .doc(auth().currentUser.uid)
@@ -152,9 +123,6 @@ export const AuthProvider = ({children}) => {
                           userData,
                         });
                     } else {
-                      console.log('yesss else part!');
-                      userData.name = fb_data.user.displayName;
-                      //console.log(userData.name);
                       userData.name = fb_data.user.displayName;
                       userData.email = fb_data.user.email.toLowerCase();
                       userData.phone = fb_data.user.phoneNumber;
@@ -168,20 +136,33 @@ export const AuthProvider = ({children}) => {
                     }
                   });
 
-                //console.log(userData.name);
-
-                //firestore().collection("Users").doc(auth().currentUser.uid).set({
-                //userData
-                //});
+                //console.log(userData);
               });
           } catch (e) {
             console.log({e});
           }
         },
 
-        register: async (email, password) => {
+        register: async (name, email, password, phone) => {
           try {
-            await auth().createUserWithEmailAndPassword(email, password);
+            await auth()
+              .createUserWithEmailAndPassword(email, password)
+              .then(data => {
+                let userData = {};
+
+                userData.name = name;
+                userData.email = email.toLowerCase();
+                userData.phone = phone;
+
+                console.log(userData);
+
+                firestore()
+                  .collection('Users')
+                  .doc(auth().currentUser.uid)
+                  .set({
+                    userData,
+                  });
+              });
           } catch (e) {
             console.log(e);
           }

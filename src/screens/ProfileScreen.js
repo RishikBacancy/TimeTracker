@@ -150,24 +150,26 @@ const ProfileScreen = props => {
   return (
     <View style={styles.screen}>
       <Modal animationType="slide" visible={modalBtn} transparent={true}>
-        <View style={styles.modalContainer}>
-          <SimpleButton
-            style={styles.modalBtn}
-            btnTitle="Open Camera"
-            onPress={cameraHandler}
-          />
-          <SimpleButton
-            style={styles.modalBtn}
-            btnTitle="Choose from Library"
-            onPress={libraryHandler}
-          />
-          <SimpleButton
-            style={styles.modalBtn}
-            btnTitle="Cancel"
-            onPress={() => {
-              setModalBtn(false);
-            }}
-          />
+        <View style={styles.modalWrap}>
+          <View style={styles.modalContainer}>
+            <SimpleButton
+              style={styles.modalBtn}
+              btnTitle="Open Camera"
+              onPress={cameraHandler}
+            />
+            <SimpleButton
+              style={styles.modalBtn}
+              btnTitle="Choose from Library"
+              onPress={libraryHandler}
+            />
+            <SimpleButton
+              style={styles.modalBtn}
+              btnTitle="Cancel"
+              onPress={() => {
+                setModalBtn(false);
+              }}
+            />
+          </View>
         </View>
       </Modal>
 
@@ -275,8 +277,7 @@ const ProfileScreen = props => {
           />
         </View>
       </Card>
-      <Text>Profile Screen</Text>
-      <Icon name="key" size={25} color="black" onPress={resetHandler} />
+      <SimpleButton btnTitle={'Reset password'} onPress={resetHandler} />
     </View>
   );
 };
@@ -284,11 +285,16 @@ const ProfileScreen = props => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     alignItems: 'center',
   },
+  modalWrap: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    backgroundColor: 'rgba(54,54,54,0.5)',
+  },
   modalContainer: {
-    marginTop: '128%',
     width: '100%',
     height: '30%',
     borderColor: '#ccc',

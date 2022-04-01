@@ -2,18 +2,17 @@ import React from 'react';
 import {View, StyleSheet, TextInput} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const InputField = ({inputValue, iconName, ...extra}) => {
+const InputField = props => {
   return (
-    <View style={styles.inputContainer}>
-      <View style={styles.iconContainner}>
-        <Icon name={iconName} color="#666" size={25} />
+    <View style={[styles.inputContainer, props.style]}>
+      <View style={[styles.iconContainner, props.style]}>
+        <Icon name={props.iconName} color="#666" size={25} />
       </View>
       <TextInput
-        {...extra}
-        value={inputValue}
-        numberOfLines={1}
+        {...props}
+        value={props.inputValue}
         placeholderTextColor="#666"
-        style={styles.textContainner}
+        style={[styles.textContainner, props.style]}
       />
     </View>
   );
