@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View} from 'react-native';
 import {Bubble, GiftedChat, Send} from 'react-native-gifted-chat';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -32,6 +32,7 @@ const ChatScreen = () => {
     ]);
   }, []);
 
+  // eslint-disable-next-line no-shadow
   const onSend = useCallback((messages = []) => {
     setMessages(previousMessages =>
       GiftedChat.append(previousMessages, messages),
@@ -44,6 +45,7 @@ const ChatScreen = () => {
         <View>
           <MaterialCommunityIcons
             name="send-circle"
+            // eslint-disable-next-line react-native/no-inline-styles
             style={{marginBottom: 5, marginRight: 5}}
             size={32}
             color="#2e64e5"
@@ -78,6 +80,7 @@ const ChatScreen = () => {
   return (
     <GiftedChat
       messages={messages}
+      // eslint-disable-next-line no-shadow
       onSend={messages => onSend(messages)}
       user={{
         _id: 1,
