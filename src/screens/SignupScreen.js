@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, StyleSheet, Image, Alert, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, Alert, TouchableOpacity, ActivityIndicator} from 'react-native';
 import InputField from '../components/InputField';
 import SimpleButton from '../components/SimpleButton';
 import SocialButton from '../components/SocialButton';
@@ -11,9 +11,11 @@ const SignUpScreen = ({ navigation }) => {
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
 
+
 	const { register, googleLogin, fbLogin } = useContext(AuthContext);
 
 	const signUpHandler = () => {
+
 		if (name === '' || phone === '' || email === '' || password === '') {
 			Alert.alert('Empty Fields!', 'Please! Fill up all Fields.', [
 				{ text: 'Okay', onPress: () => {}, style: 'cancel' }
@@ -31,11 +33,11 @@ const SignUpScreen = ({ navigation }) => {
 			setEmail('');
 			setPassword('');
 		}
+
 	};
 
 	return (
 		<View style={styles.screen}>
-
 			<Image source={require('../../assets/logo.png')} resizeMode="contain" style={styles.logoContainer} />
 
 			<View style={styles.formContainer}>

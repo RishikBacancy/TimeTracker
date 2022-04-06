@@ -45,9 +45,10 @@ export const AuthProvider = ({ children }) => {
 									console.log("yesss else part!");
 									userData.name = data.user.displayName;
 									//console.log(userData.name);
-									userData.name = data.user.displayName;
 									userData.email = data.user.email.toLowerCase();
 									userData.phone = data.user.phoneNumber;
+									userData.image = null;
+									userData.userId = auth().currentUser.uid;
 
 									firestore().collection("Users").doc(auth().currentUser.uid).set({
 										userData
@@ -102,6 +103,8 @@ export const AuthProvider = ({ children }) => {
 									userData.name = data.user.displayName;
 									userData.email = data.user.email.toLowerCase();
 									userData.phone = data.user.phoneNumber;
+									userData.image = null;
+									userData.userId = auth().currentUser.uid;
 
 									firestore().collection("Users").doc(auth().currentUser.uid).set({
 										userData
@@ -126,6 +129,8 @@ export const AuthProvider = ({ children }) => {
 							userData.name = name;
 							userData.email = email.toLowerCase();
 							userData.phone = phone;
+							userData.image = null;
+							userData.userId = auth().currentUser.uid;
 
 							console.log(userData);
 

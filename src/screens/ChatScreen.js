@@ -1,69 +1,71 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect, useCallback, useContext} from 'react';
 import {View, ScrollView, Text, Button, StyleSheet} from 'react-native';
 import {Bubble, GiftedChat, Send} from 'react-native-gifted-chat';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Colors from '../Constants/Colors';
+import {AuthContext} from '../navigaion/AuthProvider';
 import firestore from '@react-native-firebase/firestore';
-const ChatScreen = ({user, route}) => {
+
+const ChatScreen = props => {
   const [messages, setMessages] = useState([]);
-  const {userName, email} = route.params;
+  // const {userName, email} = props.route.params;
 
   const getAllMessages = async () => {};
 
+  const {user} = useContext(AuthContext);
+
+  const {userId} = props.route.params;
+
+  //console.log(userId);
+
+  const fetchAllMsg = async () => {
+    const roomid =
+      userId > user.uid ? user.uid + '-' + userId : userId + '-' + user.uid;
+
+    const querySnapshot = await firestore()
+      .collection('ChatRooms')
+      .doc(roomid)
+      .collection('Messages')
+      .orderBy('createdAt', 'desc')
+      .get();
+
+    const allMsg = querySnapshot.docs.map(docSnap => {
+      return {
+        ...docSnap.data(),
+        createdAt: docSnap.data().createdAt.toDate(),
+      };
+    });
+
+    console.log(allMsg);
+    setMessages(allMsg);
+  };
+
   useEffect(() => {
-    // setMessages([
-    //   {
-    //     _id: 1,
-    //     text: 'Hello developer',
-    //     createdAt: new Date(),
-    //     user: {
-    //       _id: 2,
-    //       name: 'React Native',
-    //       avatar: 'https://placeimg.com/140/140/any',
-    //     },
-    //   },
-    //   {
-    //     _id: 2,
-    //     text: 'Hello world',
-    //     createdAt: new Date(),
-    //     user: {
-    //       _id: 1,
-    //       name: 'React Native',
-    //       avatar: 'https://placeimg.com/140/140/any',
-    //     },
-    //   },
-    // ]);
-
-    // getAllMessages();
-    if (typeof email !== 'undefined') {
-      const docid =
-        email > user.id ? user.email + '-' + email : email + '-' + user.email;
-      const messageRef = firestore()
-        .collection('chatrooms')
-        .doc(docid)
-        .collection('messages')
-        .orderBy('createdAt', 'desc');
-
-      messageRef.onSnapshot(querySnap => {
-        const allmsg = querySnap.docs.map(docSnap => {
-          const data = docSnap.data();
-          if (data.createdAt) {
-            return {
-              ...querySnap.data(),
-              createdAt: docSnap.data().createdAt.toDate(),
-            };
-          } else {
-            return {
-              ...querySnap.data(),
-              createdAt: new Date(),
-            };
-          }
-        });
-
-        setMessages(allmsg);
-      });
-    }
+    fetchAllMsg();
   }, []);
+
+  const onSend = messageArray => {
+    const msg = messageArray[0];
+    const myMsg = {
+      ...msg,
+      sentBY: user.uid,
+      sentTo: userId,
+    };
+
+    console.log(myMsg);
+
+    setMessages(previousMessages => GiftedChat.append(previousMessages, myMsg));
+
+    const roomId =
+      userId > user.uid ? user.uid + '-' + userId : userId + '-' + user.uid;
+
+    firestore()
+      .collection('ChatRooms')
+      .doc(roomId)
+      .collection('Messages')
+      .add({...myMsg, createdAt: firestore.FieldValue.serverTimestamp()});
+  };
 
   const renderSend = props => {
     return (
@@ -73,7 +75,7 @@ const ChatScreen = ({user, route}) => {
             name="send-circle"
             style={{marginBottom: 5, marginRight: 5}}
             size={32}
-            color="#2e64e5"
+            color={Colors.primaryColor}
           />
         </View>
       </Send>
@@ -86,7 +88,7 @@ const ChatScreen = ({user, route}) => {
         {...props}
         wrapperStyle={{
           right: {
-            backgroundColor: '#2e64e5',
+            backgroundColor: Colors.primaryColor,
           },
         }}
         textStyle={{
@@ -102,29 +104,12 @@ const ChatScreen = ({user, route}) => {
     return <FontAwesome name="angle-double-down" size={22} color="#333" />;
   };
 
-  const onSend = useCallback((messages = []) => {
-    const msg = messages[0];
-    const mymsg = {
-      ...msg,
-      sentBytes: user.email,
-      sentTo: email,
-      createdAt: new Date(),
-    };
-    setMessages(previousMessages => GiftedChat.append(previousMessages, mymsg));
-    const docid = uid > user.id ? user.uid + '-' + uid : uid + '-' + user.id;
-    firestore()
-      .collection('chatrooms')
-      .doc(docid)
-      .collection('messages')
-      .add({...mymsg, createdAt: firestore.FieldValue.serverTimestamp()});
-  }, []);
-
   return (
     <GiftedChat
       messages={messages}
       onSend={messages => onSend(messages)}
       user={{
-        _id: user.email,
+        _id: user.uid,
       }}
       renderBubble={renderBubble}
       alwaysShowSend
