@@ -35,7 +35,12 @@ const HomeScreen = props => {
   }, [props.navigation]);
 
   useEffect(() => {
-    const register = firestore()
+    getTask();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const getTask = async () => {
+    const taskPrint = await firestore()
       .collection('Users')
       .doc(cUser.uid)
       .collection('Projects')
@@ -54,8 +59,8 @@ const HomeScreen = props => {
         setProjectData(project);
       });
     console.log(projectData);
-    return () => register();
-  }, [cUser.uid, projectData]);
+    return taskPrint;
+  };
 
   const addHandler = () => {
     firestore()
