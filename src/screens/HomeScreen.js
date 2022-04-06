@@ -1,12 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, Text, Modal, FlatList} from 'react-native';
 import SimpleButton from '../components/SimpleButton';
-// import {AuthContext} from '../navigaion/AuthProvider';
 import HeaderButton from '../components/HeaderButton';
 import Card from '../components/Card';
 import firestore from '@react-native-firebase/firestore';
 import auth, {firebase} from '@react-native-firebase/auth';
-// import Colors from '../Constants/Colors';
 import InputField from '../components/InputField';
 
 const HomeScreen = props => {
