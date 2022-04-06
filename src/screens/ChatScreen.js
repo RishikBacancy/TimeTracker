@@ -42,7 +42,38 @@ const ChatScreen = props => {
   };
 
   useEffect(() => {
+<<<<<<< HEAD
     fetchAllMsg();
+=======
+    
+    //fetchAllMsg();
+    const roomid = userId > user.uid ? user.uid+"-"+userId : userId+"-"+user.uid;
+
+    const msgRef = firestore().collection("ChatRooms").doc(roomid).collection("Messages")
+    .orderBy("createdAt","desc")
+
+    msgRef.onSnapshot((querySnapshot)=>{
+      const allMsg = querySnapshot.docs.map( docSnap => {
+
+        const msgData = docSnap.data();
+
+        if(msgData){
+          return{
+            ...docSnap.data(),
+            createdAt: docSnap.data().createdAt.toDate()
+          }
+        }else{
+          return{
+            ...docSnap.data(),
+            createdAt: new Date()
+          }
+        }
+      })
+    })
+
+    setMessages(allMsg);
+
+>>>>>>> cf9fb6d992aa11136ccba2b6ea96ad3dbcd32b4a
   }, []);
 
   const onSend = messageArray => {
