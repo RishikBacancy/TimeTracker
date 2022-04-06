@@ -53,6 +53,7 @@ const ChatScreen = props => {
     .orderBy("createdAt","desc")
 
     msgRef.onSnapshot((querySnapshot)=>{
+      
       const allMsg = querySnapshot.docs.map( docSnap => {
 
         const msgData = docSnap.data();
@@ -69,9 +70,10 @@ const ChatScreen = props => {
           }
         }
       })
-    })
 
-    setMessages(allMsg);
+      setMessages(allMsg);
+
+    })
 
 >>>>>>> cf9fb6d992aa11136ccba2b6ea96ad3dbcd32b4a
   }, []);
