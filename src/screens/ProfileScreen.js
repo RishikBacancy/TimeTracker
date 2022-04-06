@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
-import { View, Text, StyleSheet, Alert, Modal, Image, TextInput } from 'react-native';
+import { View, Text, StyleSheet, Alert, Modal, Image, TextInput, ActivityIndicator } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { AuthContext } from '../navigaion/AuthProvider';
@@ -8,6 +8,7 @@ import Colors from '../Constants/Colors';
 import SimpleButton from '../components/SimpleButton';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as ImagePicker from 'react-native-image-picker';
+import storage from '@react-native-firebase/storage';
 
 const ProfileScreen = (props) => {
 	const { logout, forgotPswd } = useContext(AuthContext);
@@ -17,7 +18,6 @@ const ProfileScreen = (props) => {
 	const [ uPhone, setUPhone ] = useState('');
 
 	const [ pic, setPic ] = useState(null);
-	const [ basePic, setBasePic ] = useState(null);
 
 	//let uriImage = {};
 
@@ -25,11 +25,15 @@ const ProfileScreen = (props) => {
 
 	const [ modalBtn, setModalBtn ] = useState(false);
 	const [ editMode, setEditMode ] = useState(false);
+	const [ isLoading, setIsLoading ] = useState(false);
+
+	const reference = storage().ref().child('/UserProfile/' + user);
 
 	//const [ response, setResponse ] = useState(null);
 
 	useEffect(
 		() => {
+			setIsLoading(true);
 			firestore().collection('Users').doc(user).get().then((documentSnapshot) => {
 				if (documentSnapshot.exists) {
 					let userData = {};
@@ -42,21 +46,12 @@ const ProfileScreen = (props) => {
 					setUName(userData.name);
 					setUEmail(userData.email);
 					setUPhone(userData.phone);
+					setPic(userData.image);
+					setIsLoading(false);
 				}
 			});
 		},
 		[ user ]
-	);
-
-	useEffect(
-		() => {
-			if (basePic != null) {
-				firestore().collection('Users').doc(user).update({
-					profileImage: firestore.Blob.fromBase64String(basePic[0])
-				});
-			}
-		},
-		[ basePic ]
 	);
 
 	const resetHandler = () => {
@@ -84,7 +79,25 @@ const ProfileScreen = (props) => {
 
 				let uriImage = { uri: response.assets.map(({ uri }) => uri) };
 				console.log('=================\n' + uriImage);
-				setPic(uriImage.uri[0]);
+				const uploadImage = reference.putFile(uriImage.uri[0]);
+
+				uploadImage.on(
+					'state_changed',
+					(imageSnapshot) => {
+						console.log(imageSnapshot.bytesTransferred + '/' + imageSnapshot.totalBytes);
+					},
+					(err) => {
+						console.log(err);
+					},
+					() => {
+						uploadImage.snapshot.ref.getDownloadURL().then((imageUrl) => {
+							console.log(imageUrl);
+							setPic(imageUrl);
+						});
+					}
+				);
+
+				//setPic(uriImage.uri[0]);
 			}
 		);
 		setModalBtn(false);
@@ -114,7 +127,25 @@ const ProfileScreen = (props) => {
 
 				//console.log('=================\n' + uriImage);
 				//console.log(response.assets.find("base64"));
-				setPic(uriImage.uri[0]);
+				const uploadImage = reference.putFile(uriImage.uri[0]);
+
+				uploadImage.on(
+					'state_changed',
+					(imageSnapshot) => {
+						console.log(imageSnapshot.bytesTransferred + '/' + imageSnapshot.totalBytes);
+					},
+					(err) => {
+						console.log(err);
+					},
+					() => {
+						uploadImage.snapshot.ref.getDownloadURL().then((imageUrl) => {
+							console.log(imageUrl);
+							setPic(imageUrl);
+						});
+					}
+				);
+
+				//setPic(uriImage.uri[0]);
 			}
 		);
 		setModalBtn(false);
@@ -125,18 +156,30 @@ const ProfileScreen = (props) => {
 	};
 
 	const updateHandler = () => {
+		setIsLoading(true);
+
 		let userData = {};
 
 		userData.name = uName;
 		userData.email = uEmail;
 		userData.phone = uPhone;
+		userData.image = pic;
 
 		firestore().collection('Users').doc(user).update({
 			userData
 		});
 
 		setEditMode(false);
+		setIsLoading(false);
 	};
+
+	if (isLoading) {
+		return (
+			<View style={styles.screen}>
+				<ActivityIndicator size={'large'} color={Colors.primaryColor} />
+			</View>
+		);
+	}
 
 	return (
 		<View style={styles.screen}>
@@ -175,9 +218,11 @@ const ProfileScreen = (props) => {
 							/>
 						)}
 					</View>
-					<View style={styles.editImage}>
-						<Icon name="ios-add-circle" size={25} color={'black'} onPress={() => setModalBtn(true)} />
-					</View>
+					{editMode ? (
+						<View style={styles.editImage}>
+							<Icon name="ios-add-circle" size={25} color={'black'} onPress={() => setModalBtn(true)} />
+						</View>
+					) : null}
 				</View>
 
 				<View style={styles.dataField}>
@@ -214,6 +259,7 @@ const ProfileScreen = (props) => {
 							onChangeText={(data) => setUPhone(data)}
 							value={uPhone}
 							numberOfLines={1}
+							keyboardType="number-pad"
 							placeholderTextColor="#ccc"
 						/>
 					) : (
@@ -249,11 +295,11 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-around',
 		alignItems: 'center'
 	},
-	modalWrap:{
-		flex:1,
-		justifyContent:"flex-end",
-		alignItems:"center",
-		backgroundColor:"rgba(54,54,54,0.5)"
+	modalWrap: {
+		flex: 1,
+		justifyContent: 'flex-end',
+		alignItems: 'center',
+		backgroundColor: 'rgba(54,54,54,0.5)'
 	},
 	modalContainer: {
 		width: '100%',

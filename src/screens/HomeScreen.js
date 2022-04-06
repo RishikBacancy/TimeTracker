@@ -8,6 +8,8 @@ import firestore from '@react-native-firebase/firestore';
 import auth, { firebase } from '@react-native-firebase/auth';
 import Colors from '../Constants/Colors';
 import InputField from '../components/InputField';
+import { Dropdown } from 'react-native-element-dropdown';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const HomeScreen = (props) => {
 	const { user, logout } = useContext(AuthContext);
@@ -19,6 +21,11 @@ const HomeScreen = (props) => {
 	const [ description, setDescription ] = useState('');
 
 	const [ projectData, setProjectData ] = useState([]);
+
+	const [ value, setValue ] = useState(null);
+	const [ isFocus, setIsFocus ] = useState(false);
+
+	const data = [ { label: 'Professional', value: 'professional' }, { label: 'Personal', value: 'personal' } ];
 
 	useEffect(
 		() => {
@@ -34,32 +41,39 @@ const HomeScreen = (props) => {
 					/>
 				)
 			});
-
-			
 		},
 		[ props.navigation ]
 	);
 
-	useEffect(()=>{
+	useEffect(() => {
+		const register = firestore()
+			.collection('Users')
+			.doc(cUser.uid)
+			.collection('Projects')
+			.onSnapshot((dataSnap) => {
+				const project = [];
 
-		const register = firestore().collection('Users').doc(cUser.uid).collection('Projects').onSnapshot((dataSnap) => {
-			const project = [];
-
-			if(dataSnap != null){
-				dataSnap.forEach((dataSnapshot) => {
-					if(dataSnapshot.exists){
-						project.push({
-							...dataSnapshot.data()
-						});
-					}
-				});
-			}
-			setProjectData(project);
-			
-		});
+				if (dataSnap != null) {
+					dataSnap.forEach((dataSnapshot) => {
+						if (dataSnapshot.exists) {
+							project.push({
+								...dataSnapshot.data()
+							});
+						}
+					});
+				}
+				setProjectData(project);
+			});
 		console.log(projectData);
-		return() => register();
-	},[])
+		return () => register();
+	}, []);
+
+	const renderLabel = () => {
+		if (value || isFocus) {
+			return <Text style={[ styles.label, isFocus && { color: 'orange' } ]}>Select Tag</Text>;
+		}
+		return null;
+	};
 
 	const addHandler = () => {
 		firestore()
@@ -113,6 +127,40 @@ const HomeScreen = (props) => {
 							multiline={true}
 							style={styles.description}
 						/>
+
+						<View style={styles.dropdowncontainer}>
+							{/* {renderLabel()} */}
+							<Dropdown
+								style={[ styles.dropdown, isFocus && { borderColor: Colors.primaryColor } ]}
+								placeholderStyle={styles.placeholderStyle}
+								selectedTextStyle={styles.selectedTextStyle}
+								// inputSearchStyle={styles.inputSearchStyle}
+								iconStyle={styles.iconStyle}
+								data={data}
+								maxHeight={110}
+								// width={300}
+								labelField="label"
+								valueField="value"
+								// placeholder={!isFocus ? 'Select item' : 'Select Tag'}
+								// searchPlaceholder="Search..."
+								value={value}
+								onFocus={() => setIsFocus(true)}
+								onBlur={() => setIsFocus(false)}
+								onChange={(item) => {
+									setValue(item.value);
+									setIsFocus(false);
+								}}
+								renderLeftIcon={() => (
+									<AntDesign
+										style={styles.icon}
+										color={isFocus ? Colors.primaryColor : Colors.accentColor}
+										name="Safety"
+										size={20}
+									/>
+								)}
+							/>
+						</View>
+
 						<View style={styles.btnWrap}>
 							<SimpleButton style={styles.btnStyle} btnTitle={'Add'} onPress={addHandler} />
 							<SimpleButton
@@ -136,6 +184,44 @@ const styles = StyleSheet.create({
 	},
 	iconWrap: {
 		marginRight: 7
+	},
+	dropdowncontainer: {
+		// flex: 1,
+		height: 100,
+		width: 200,
+		backgroundColor: 'white',
+		marginVertical: 5
+	},
+	dropdown: {
+		// maxHeight: 100,
+		borderColor: Colors.accentColor,
+		borderWidth: 1,
+		borderRadius: 7,
+		paddingHorizontal: 8
+	},
+	icon: {
+		marginRight: 5
+	},
+	label: {
+		position: 'absolute',
+		backgroundColor: 'white',
+		paddingHorizontal: 8,
+		fontSize: 14,
+		left: 22,
+		top: 8,
+		zIndex: 999,
+	},
+	placeholderStyle: {
+		fontSize: 16,
+		fontFamily:"Ubuntu-Regular",
+	},
+	selectedTextStyle: {
+		fontSize: 16,
+		fontFamily:"Ubuntu-Regular",
+	},
+	iconStyle: {
+		width: 20,
+		height: 20
 	},
 	modalWrap: {
 		flex: 1,
@@ -164,14 +250,14 @@ const styles = StyleSheet.create({
 	description: {
 		height: 100
 	},
-	flatlistWrap:{
-		width:"100%",
-		height:"100%",
-		marginTop:10,
+	flatlistWrap: {
+		width: '100%',
+		height: '100%',
+		marginTop: 10
 	},
 	cardWrap: {
-		marginVertical:10,
-		marginHorizontal:20,
+		marginVertical: 10,
+		marginHorizontal: 20
 	}
 });
 

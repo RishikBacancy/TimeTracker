@@ -1,9 +1,10 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, StyleSheet, Image, Alert, TouchableOpacity, Platform } from 'react-native';
+import { View, Text, StyleSheet, Image, Alert, TouchableOpacity, Platform , ActivityIndicator} from 'react-native';
 import InputField from '../components/InputField';
 import SimpleButton from '../components/SimpleButton';
 import SocialButton from '../components/SocialButton';
 import { AuthContext } from '../navigaion/AuthProvider';
+import Colors from '../Constants/Colors';
 
 const SigninScreen = ({ navigation }) => {
 	const [ email, setEmail ] = useState('');
@@ -12,6 +13,7 @@ const SigninScreen = ({ navigation }) => {
 	const { login, googleLogin, fbLogin } = useContext(AuthContext);
 
 	const signInHandler = () => {
+		
 		if (email === '' || password === '') {
 			Alert.alert('Empty Fields!', 'Please! Fill up all Fields.', [
 				{ text: 'Okay', onPress: () => {}, style: 'cancel' }
