@@ -38,7 +38,32 @@ const ChatScreen = props => {
 
   useEffect(() => {
     
-    fetchAllMsg();
+    //fetchAllMsg();
+    const roomid = userId > user.uid ? user.uid+"-"+userId : userId+"-"+user.uid;
+
+    const msgRef = firestore().collection("ChatRooms").doc(roomid).collection("Messages")
+    .orderBy("createdAt","desc")
+
+    msgRef.onSnapshot((querySnapshot)=>{
+      const allMsg = querySnapshot.docs.map( docSnap => {
+
+        const msgData = docSnap.data();
+
+        if(msgData){
+          return{
+            ...docSnap.data(),
+            createdAt: docSnap.data().createdAt.toDate()
+          }
+        }else{
+          return{
+            ...docSnap.data(),
+            createdAt: new Date()
+          }
+        }
+      })
+    })
+
+    setMessages(allMsg);
 
   }, []);
 
