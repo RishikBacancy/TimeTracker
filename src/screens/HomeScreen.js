@@ -98,7 +98,7 @@ const HomeScreen = (props) => {
 			<View style={styles.flatlistWrap}>
 				<FlatList
 					data={projectData}
-					keyExtractor={(item, index) => item.id}
+					keyExtractor={(item, index) => index.toString()}
 					renderItem={({ item }) => (
 						<Card style={styles.cardWrap}>
 							<Text>Project Name: {item.name}</Text>
