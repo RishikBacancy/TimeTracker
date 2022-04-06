@@ -164,6 +164,7 @@ const ProfileScreen = (props) => {
 		userData.email = uEmail;
 		userData.phone = uPhone;
 		userData.image = pic;
+		userData.userId = user;
 
 		firestore().collection('Users').doc(user).update({
 			userData

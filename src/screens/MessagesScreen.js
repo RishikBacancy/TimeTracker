@@ -27,7 +27,7 @@ const MessagesScreen = ({ navigation }) => {
 
     console.log(userList);
 
-    userList = userList.filter( details => details.email != user.email);
+    userList = userList.filter( details => details.userId != user.uid);
 
 		console.log(userList);
 		setUsers(userList);
@@ -43,7 +43,7 @@ const MessagesScreen = ({ navigation }) => {
 			<FlatList
 				data={users}
 				renderItem={({ item }) => (
-					<Card onPress={() => navigation.navigate('Chat', { userName: item.name })}>
+					<Card onPress={() => navigation.navigate('Chat', { userName: item.name, userId: item.userId })}>
 						<UserInfo>
 							<UserImgWrapper>
 								{item.image === null ? (
