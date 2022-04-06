@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {View, Text, Button, StyleSheet, FlatList} from 'react-native';
 import {
   Container,
@@ -12,6 +12,8 @@ import {
   MessageText,
   TextSection,
 } from '../styles/MessageStyles';
+import {AuthContext} from '../navigaion/AuthProvider';
+import firestore from '@react-native-firebase/firestore';
 
 const Messages = [
   {
@@ -57,26 +59,43 @@ const Messages = [
 ];
 
 const MessagesScreen = ({navigation}) => {
+  const {user} = useContext(AuthContext);
+  const [users, setUsers] = useState([]);
+  const getUsers = async () => {
+    const querySanp = await firestore().collection('Users').get();
+    const allusers = querySanp.docs.map(docSnap => docSnap.data('userData'));
+
+    console.log(allusers);
+    setUsers(allusers);
+  };
+
+  useEffect(() => {
+    getUsers();
+  }, []);
   return (
     <Container>
       <FlatList
-        data={Messages}
-        keyExtractor={item => item.id}
+        data={users}
+        keyExtractor={item => item.email}
         renderItem={({item}) => (
           <Card
             onPress={() =>
-              navigation.navigate('Chat', {userName: item.userName})
+              navigation.navigate('Chat', {
+                userName: item.name,
+                email: item.email,
+              })
             }>
             <UserInfo>
               <UserImgWrapper>
-                <UserImg source={item.userImg} />
+                <UserImg source={{uri: item.userData.image}} />
               </UserImgWrapper>
               <TextSection>
                 <UserInfoText>
-                  <UserName>{item.userName}</UserName>
-                  <PostTime>{item.messageTime}</PostTime>
+                  {/* {console.log(item.userData.name)} */}
+                  <UserName>{item.userData.name}</UserName>
+                  {/* <PostTime>{item.messageTime}</PostTime> */}
                 </UserInfoText>
-                <MessageText>{item.messageText}</MessageText>
+                {/* <MessageText>{item.messageText}</MessageText> */}
               </TextSection>
             </UserInfo>
           </Card>

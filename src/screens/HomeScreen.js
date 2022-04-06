@@ -8,6 +8,8 @@ import firestore from '@react-native-firebase/firestore';
 import auth, {firebase} from '@react-native-firebase/auth';
 import Colors from '../Constants/Colors';
 import InputField from '../components/InputField';
+import {Dropdown} from 'react-native-element-dropdown';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const HomeScreen = props => {
   const {user, logout} = useContext(AuthContext);
@@ -19,6 +21,23 @@ const HomeScreen = props => {
   const [description, setDescription] = useState('');
 
   const [projectData, setProjectData] = useState([]);
+  const data = [
+    {label: 'professional', value: 'professional'},
+    {label: 'personal', value: 'personal'},
+  ];
+  const [value, setValue] = useState(null);
+  const [isFocus, setIsFocus] = useState(false);
+
+  const renderLabel = () => {
+    if (value || isFocus) {
+      return (
+        <Text style={[styles.label, isFocus && {color: 'orange'}]}>
+          Select Tag
+        </Text>
+      );
+    }
+    return null;
+  };
 
   useEffect(() => {
     props.navigation.setOptions({
@@ -110,6 +129,7 @@ const HomeScreen = props => {
               multiline={true}
               style={styles.description}
             />
+
             <View style={styles.btnWrap}>
               <SimpleButton
                 style={styles.btnStyle}
@@ -120,6 +140,38 @@ const HomeScreen = props => {
                 style={styles.btnStyle}
                 btnTitle={'Cancel'}
                 onPress={() => setModalBtn(false)}
+              />
+            </View>
+            <View style={styles.dropdowncontainer}>
+              {/* {renderLabel()} */}
+              <Dropdown
+                style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                // inputSearchStyle={styles.inputSearchStyle}
+                iconStyle={styles.iconStyle}
+                data={data}
+                maxHeight={110}
+                // width={300}
+                labelField="label"
+                valueField="value"
+                // placeholder={!isFocus ? 'Select item' : 'Select Tag'}
+                // searchPlaceholder="Search..."
+                value={value}
+                onFocus={() => setIsFocus(true)}
+                onBlur={() => setIsFocus(false)}
+                onChange={item => {
+                  setValue(item.value);
+                  setIsFocus(false);
+                }}
+                renderLeftIcon={() => (
+                  <AntDesign
+                    style={styles.icon}
+                    color={isFocus ? 'orange' : 'black'}
+                    name="Safety"
+                    size={20}
+                  />
+                )}
               />
             </View>
           </View>
@@ -173,6 +225,46 @@ const styles = StyleSheet.create({
   cardWrap: {
     marginVertical: 10,
     marginHorizontal: 20,
+  },
+  dropdowncontainer: {
+    // flex: 1,
+    height: 100,
+    width: 200,
+    backgroundColor: 'white',
+    padding: 16,
+  },
+  dropdown: {
+    // maxHeight: 100,
+    borderColor: 'gray',
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+  },
+  icon: {
+    marginRight: 5,
+  },
+  label: {
+    position: 'absolute',
+    backgroundColor: 'white',
+    left: 22,
+    top: 8,
+    zIndex: 999,
+    paddingHorizontal: 8,
+    fontSize: 14,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
   },
 });
 
