@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react';
-import { View, ScrollView, Text, Button, StyleSheet } from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
+import { View, StyleSheet } from 'react-native';
 import { Bubble, GiftedChat, Send } from 'react-native-gifted-chat';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -47,7 +47,9 @@ const ChatScreen = (props) => {
 			}
 		});
 
-		return () => {};
+		return () => {
+			msgRef();
+		};
 	}, []);
 
 	const onSend = (messageArray) => {
@@ -138,6 +140,6 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		justifyContent: 'center',
-    backgroundColor:"white",
-	},
+		backgroundColor: 'white',
+	}
 });
