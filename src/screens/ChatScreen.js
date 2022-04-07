@@ -1,5 +1,5 @@
-import React, {useState, useEffect, useCallback, useContext} from 'react';
-import {View, ScrollView, Text, Button, StyleSheet} from 'react-native';
+import React, {useState, useEffect, useContext} from 'react';
+import {View, StyleSheet} from 'react-native';
 import {Bubble, GiftedChat, Send} from 'react-native-gifted-chat';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -16,32 +16,7 @@ const ChatScreen = props => {
 
   //console.log(userId);
 
-  // const fetchAllMsg = async () => {
-  //   const roomid =
-  //     userId > user.uid ? user.uid + '-' + userId : userId + '-' + user.uid;
-
-  //   const querySnapshot = await firestore()
-  //     .collection('ChatRooms')
-  //     .doc(roomid)
-  //     .collection('Messages')
-  //     .orderBy('createdAt', 'desc')
-  //     .get();
-
-  //   const allMsg = querySnapshot.docs.map(docSnap => {
-  //     return {
-  //       ...docSnap.data(),
-  //       createdAt: docSnap.data().createdAt.toDate(),
-  //     };
-  //   });
-
-  //   console.log(allMsg);
-  //   setMessages(allMsg);
-  // };
-
   useEffect(() => {
-    // const subscription = EventEmitter.addListener('change', () => {});
-
-    //fetchAllMsg();
     const roomid =
       userId > user.uid ? user.uid + '-' + userId : userId + '-' + user.uid;
 
@@ -72,9 +47,9 @@ const ChatScreen = props => {
         setMessages(allMsg);
       }
     });
+
     return () => {
-      // subscription.remove();
-      setMessages();
+      msgRef();
     };
   }, []);
 
@@ -120,19 +95,19 @@ const ChatScreen = props => {
       <Bubble
         {...props}
         wrapperStyle={{
-          left: {
-            backgroundColor: '#ccc',
-          },
           right: {
             backgroundColor: Colors.primaryColor,
           },
+          left: {
+            backgroundColor: '#ccc',
+          },
         }}
         textStyle={{
-          left: {
-            color: 'black',
-          },
           right: {
             color: '#fff',
+          },
+          left: {
+            color: Colors.accentColor,
           },
         }}
       />
@@ -144,18 +119,20 @@ const ChatScreen = props => {
   };
 
   return (
-    <GiftedChat
-      messages={messages}
-      onSend={messages => onSend(messages)}
-      user={{
-        _id: user.uid,
-      }}
-      renderBubble={renderBubble}
-      alwaysShowSend
-      renderSend={renderSend}
-      scrollToBottom
-      scrollToBottomComponent={scrollToBottomComponent}
-    />
+    <View style={styles.container}>
+      <GiftedChat
+        messages={messages}
+        onSend={messages => onSend(messages)}
+        user={{
+          _id: user.uid,
+        }}
+        renderBubble={renderBubble}
+        alwaysShowSend
+        renderSend={renderSend}
+        scrollToBottom
+        scrollToBottomComponent={scrollToBottomComponent}
+      />
+    </View>
   );
 };
 
@@ -164,7 +141,7 @@ export default ChatScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: 'white',
   },
 });

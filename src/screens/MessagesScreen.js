@@ -20,39 +20,29 @@ const MessagesScreen = ({navigation}) => {
 
   const [users, setUsers] = useState([]);
 
-  const getUsers = async () => {
-    const querySanp = await firestore().collection('Users').get();
-
-    let userList = querySanp.docs.map(details => details.get('userData'));
-
-    console.log(userList);
-
-    userList = userList.filter(details => details.userId != user.uid);
-
-    console.log(userList);
-    setUsers(userList);
-  };
-
   useEffect(() => {
-    // getUsers();
+    //getUsers();
+
     const userRef = firestore().collection('Users');
 
-    userRef.onSnapshot(querySanp => {
+    const unSub = userRef.onSnapshot(querySanp => {
       if (querySanp != null) {
         let userList = querySanp.docs.map(details => details.get('userData'));
 
-        console.log(querySanp);
+        console.log(userList);
 
         userList = userList.filter(details => details.userId != user.uid);
 
-        //   console.log(userList);
+        console.log(userList);
         setUsers(userList);
       }
+
+      return () => {
+        unSub();
+      };
     });
+
     //console.log(user);
-    return () => {
-      setUsers({});
-    };
   }, []);
 
   return (

@@ -56,7 +56,7 @@ const AppStack = () => {
         })}
       />
       <Tab.Screen name="Profile" component={ProfileScreen} />
-      <Tab.Screen name="TimeTracking" component={TimeTracking} />
+      {/* <Tab.Screen name="TimeTracking" component={TimeTracking} /> */}
     </Tab.Navigator>
   );
 };

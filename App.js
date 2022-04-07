@@ -4,6 +4,8 @@ import {LogBox} from 'react-native';
 
 LogBox.ignoreLogs(['EventEmitter.removeListener']);
 
+LogBox.ignoreLogs(['EventEmitter.removeListener']);
+
 const App = () => {
   return <Provider />;
 };

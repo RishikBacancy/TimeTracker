@@ -68,13 +68,13 @@ const TimeTracking = props => {
 
 const styles = StyleSheet.create({
   screen: {
-    flex: 1,
+    // flex: 1,
   },
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: 500,
+    height: 100,
   },
   timeContainer: {
     flexDirection: 'row',
