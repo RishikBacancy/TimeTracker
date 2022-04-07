@@ -9,9 +9,6 @@ import firestore from '@react-native-firebase/firestore';
 
 const ChatScreen = props => {
   const [messages, setMessages] = useState([]);
-  // const {userName, email} = props.route.params;
-
-  const getAllMessages = async () => {};
 
   const {user} = useContext(AuthContext);
 
@@ -19,63 +16,66 @@ const ChatScreen = props => {
 
   //console.log(userId);
 
-  const fetchAllMsg = async () => {
+  // const fetchAllMsg = async () => {
+  //   const roomid =
+  //     userId > user.uid ? user.uid + '-' + userId : userId + '-' + user.uid;
+
+  //   const querySnapshot = await firestore()
+  //     .collection('ChatRooms')
+  //     .doc(roomid)
+  //     .collection('Messages')
+  //     .orderBy('createdAt', 'desc')
+  //     .get();
+
+  //   const allMsg = querySnapshot.docs.map(docSnap => {
+  //     return {
+  //       ...docSnap.data(),
+  //       createdAt: docSnap.data().createdAt.toDate(),
+  //     };
+  //   });
+
+  //   console.log(allMsg);
+  //   setMessages(allMsg);
+  // };
+
+  useEffect(() => {
+    // const subscription = EventEmitter.addListener('change', () => {});
+
+    //fetchAllMsg();
     const roomid =
       userId > user.uid ? user.uid + '-' + userId : userId + '-' + user.uid;
 
-    const querySnapshot = await firestore()
+    const msgRef = firestore()
       .collection('ChatRooms')
       .doc(roomid)
       .collection('Messages')
-      .orderBy('createdAt', 'desc')
-      .get();
+      .orderBy('createdAt', 'desc');
 
-    const allMsg = querySnapshot.docs.map(docSnap => {
-      return {
-        ...docSnap.data(),
-        createdAt: docSnap.data().createdAt.toDate(),
-      };
+    msgRef.onSnapshot(querySnapshot => {
+      if (querySnapshot != null) {
+        const allMsg = querySnapshot.docs.map(docSnap => {
+          const msgData = docSnap.data();
+
+          if (msgData.createdAt) {
+            return {
+              ...docSnap.data(),
+              createdAt: docSnap.data().createdAt.toDate(),
+            };
+          } else {
+            return {
+              ...docSnap.data(),
+              createdAt: new Date(),
+            };
+          }
+        });
+
+        setMessages(allMsg);
+      }
     });
-
-    console.log(allMsg);
-    setMessages(allMsg);
-  };
-
-  useEffect(() => {
-<<<<<<< HEAD
-    fetchAllMsg();
-=======
-    
-    //fetchAllMsg();
-    const roomid = userId > user.uid ? user.uid+"-"+userId : userId+"-"+user.uid;
-
-    const msgRef = firestore().collection("ChatRooms").doc(roomid).collection("Messages")
-    .orderBy("createdAt","desc")
-
-    msgRef.onSnapshot((querySnapshot)=>{
-      
-      const allMsg = querySnapshot.docs.map( docSnap => {
-
-        const msgData = docSnap.data();
-
-        if(msgData){
-          return{
-            ...docSnap.data(),
-            createdAt: docSnap.data().createdAt.toDate()
-          }
-        }else{
-          return{
-            ...docSnap.data(),
-            createdAt: new Date()
-          }
-        }
-      })
-
-      setMessages(allMsg);
-
-    })
-
->>>>>>> cf9fb6d992aa11136ccba2b6ea96ad3dbcd32b4a
+    return () => {
+      // subscription.remove();
+      setMessages();
+    };
   }, []);
 
   const onSend = messageArray => {
@@ -120,11 +120,17 @@ const ChatScreen = props => {
       <Bubble
         {...props}
         wrapperStyle={{
+          left: {
+            backgroundColor: '#ccc',
+          },
           right: {
             backgroundColor: Colors.primaryColor,
           },
         }}
         textStyle={{
+          left: {
+            color: 'black',
+          },
           right: {
             color: '#fff',
           },

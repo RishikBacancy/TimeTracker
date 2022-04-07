@@ -1,11 +1,11 @@
-import React from "react";
-import Provider from "./src/navigaion/Provider";
+import React from 'react';
+import Provider from './src/navigaion/Provider';
+import {LogBox} from 'react-native';
 
-const App = () =>
-{
-  return(
-    <Provider/>
-  );
-}
+LogBox.ignoreLogs(['EventEmitter.removeListener']);
+
+const App = () => {
+  return <Provider />;
+};
 
 export default App;

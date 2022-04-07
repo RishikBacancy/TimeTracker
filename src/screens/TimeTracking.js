@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Text, View, Button, StyleSheet} from 'react-native';
 
-const TimeTracking = () => {
+const TimeTracking = props => {
   const [time, setTime] = useState({
     seconds: 0,
     minutes: 0,
