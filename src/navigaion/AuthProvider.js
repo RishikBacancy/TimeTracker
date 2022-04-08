@@ -1,5 +1,5 @@
 import React, {createContext, useState} from 'react';
-// import {Alert} from 'react-native';
+import {Alert} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
@@ -184,7 +184,15 @@ export const AuthProvider = ({children}) => {
 
         logout: async () => {
           try {
-            await auth().signOut();
+            Alert.alert('Alert!', 'You are about to Logout.', [
+              {
+                text: 'Okay',
+                onPress: () => {
+                  auth().signOut();
+                },
+                style: 'cancel',
+              },
+            ]);
           } catch (e) {
             console.log(e);
           }
