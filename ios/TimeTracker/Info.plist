@@ -39,10 +39,6 @@
 	<string></string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Lato-Regular.ttf</string>
-		<string>MaterialIcons.ttf</string>
-		<string>FontAwesome.ttf</string>
-		<string>Ionicons.ttf</string>
 		<string>Ubuntu-Bold.ttf</string>
 		<string>Ubuntu-Medium.ttf</string>
 		<string>Ubuntu-Regular.ttf</string>

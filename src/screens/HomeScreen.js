@@ -203,9 +203,11 @@ const HomeScreen = props => {
           keyExtractor={(item, index) => index.toString()}
           renderItem={({item}) => (
             <Card style={styles.cardWrap}>
-              <Text>Task Name: {item.name}</Text>
-              <Text>Task Description: {item.description}</Text>
-              <Text>Type: {item.taskType}</Text>
+              <Text style={styles.cardTaskName}>{item.name}</Text>
+              <Text style={styles.cardTaskDescription}>
+                Description: {item.description}
+              </Text>
+              <Text style={styles.cardTaskType}>Type: {item.taskType}</Text>
               <TimeTracking />
             </Card>
           )}
@@ -389,6 +391,27 @@ const styles = StyleSheet.create({
   cardWrap: {
     marginVertical: 10,
     marginHorizontal: 20,
+  },
+  cardTaskName: {
+    fontSize: 30,
+    alignSelf: 'center',
+    fontFamily: 'Ubuntu-Regular',
+    fontStyle: 'oblique',
+    textDecorationLine: 'underline',
+    marginBottom: '2%',
+  },
+  cardTaskDescription: {
+    fontSize: 18,
+    marginTop: '1%',
+    fontStyle: 'italic',
+    fontFamily: 'Ubuntu-Regular',
+  },
+  cardTaskType: {
+    fontSize: 16,
+    marginTop: '3%',
+    fontStyle: 'italic',
+    fontFamily: 'Ubuntu-Regular',
+    color: 'green',
   },
 });
 
