@@ -9,6 +9,7 @@ import Colors from '../Constants/Colors';
 import InputField from '../components/InputField';
 import { Dropdown } from 'react-native-element-dropdown';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import TimeHandler from '../components/TimeHandler';
 
 const HomeScreen = (props) => {
 	const cUser = auth().currentUser;
@@ -64,13 +65,12 @@ const HomeScreen = (props) => {
 					}
 				});
 			}
-			
+
 			setTaskList(taskData);
 			setFilterList(taskData);
 			setAllTask(true);
 			setProfTask(false);
 			setPerTask(false);
-			
 		});
 
 		return () => {
@@ -105,6 +105,9 @@ const HomeScreen = (props) => {
 					name: taskName,
 					description: description,
 					taskType: value,
+					hr: 0,
+					min: 0,
+					sec: 0,
 					createdAt: firebase.firestore.FieldValue.serverTimestamp()
 				})
 				.catch((e) => console.log(e));
@@ -117,27 +120,20 @@ const HomeScreen = (props) => {
 	};
 
 	const setStatusFilter = (option) => {
-
 		if (option !== 'All') {
-			
 			setFilterList(taskList.filter((item) => item.taskType === option));
-			//etProjectData();
-			//setFilterList(profTask);
+
 			if (option === 'Professional') {
 				setAllTask(false);
 				setPerTask(false);
 				setProfTask(true);
-
-				
 			} else if (option === 'Personal') {
 				setAllTask(false);
 				setPerTask(true);
 				setProfTask(false);
 			}
 
-			
 			setFilterOption(option);
-
 		} else {
 			setFilterList(taskList);
 			setAllTask(true);
@@ -145,8 +141,6 @@ const HomeScreen = (props) => {
 			setProfTask(false);
 			setFilterOption(option);
 		}
-
-		
 	};
 
 	return (
@@ -183,6 +177,7 @@ const HomeScreen = (props) => {
 							<Text>Task Name: {item.name}</Text>
 							<Text>Task Description: {item.description}</Text>
 							<Text>Type: {item.taskType}</Text>
+							<TimeHandler tHr={item.hr} tMin={item.min} tSec={item.sec} />
 						</Card>
 					)}
 				/>
