@@ -39,13 +39,12 @@ const SigninScreen = ({navigation}) => {
 
   return (
     <View style={styles.screen}>
-      <Image
-        source={require('../../assets/logo.png')}
-        resizeMode="contain"
-        style={styles.logoContainer}
-      />
-
       <View style={styles.formContainer}>
+        <Image
+          source={require('../../assets/logo.png')}
+          resizeMode="contain"
+          style={styles.logoContainer}
+        />
         <InputField
           iconName={'envelope-o'}
           placeholder="Email"
@@ -120,7 +119,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Ubuntu-Medium',
   },
   formContainer: {
-    marginBottom: 10,
+    marginBottom: 75,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -131,6 +130,7 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     marginBottom: 5,
+    alignSelf: 'center',
   },
   textWrap: {
     fontFamily: 'Ubuntu-Medium',

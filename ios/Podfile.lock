@@ -825,6 +825,7 @@ DEPENDENCIES:
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - GoogleSignIn
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
@@ -1062,6 +1063,6 @@ SPEC CHECKSUMS:
   RNVectorIcons: 7923e585eaeb139b9f4531d25a125a1500162a0b
   Yoga: d6b6a80659aa3e91aaba01d0012e7edcbedcbecd
 
-PODFILE CHECKSUM: d472c36cedcb0e0370dadeff3a1a9a176e384032
+PODFILE CHECKSUM: 01d736d33594836a245429b09a1e1b6afd686162
 
 COCOAPODS: 1.11.2

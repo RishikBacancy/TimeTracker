@@ -20,6 +20,27 @@
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string></string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.1051065742352-p07ennfm0bn22925s7qmij414m89ak91</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>1051065742352-p07ennfm0bn22925s7qmij414m89ak91.apps.googleusercontent.com</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -39,6 +60,9 @@
 	<string></string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>FontAwesome.ttf</string>
+		<string>MaterialCommunityIcons.ttf</string>
+		<string>Ionicons.ttf</string>
 		<string>Ubuntu-Bold.ttf</string>
 		<string>Ubuntu-Medium.ttf</string>
 		<string>Ubuntu-Regular.ttf</string>
@@ -55,5 +79,20 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+  <key>CFBundleURLTypes</key>
+  <array>
+    <dict>
+    <key>CFBundleURLSchemes</key>
+    <array>
+      <string>fbAPP-ID</string>
+    </array>
+    </dict>
+  </array>
+  <key>FacebookAppID</key>
+  <string>662479475064103</string>
+  <key>FacebookClientToken</key>
+  <string>bb22782773c5138a34d659a436b780be</string>
+  <key>FacebookDisplayName</key>
+  <string>APP-NAME</string>
 </dict>
 </plist>

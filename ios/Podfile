@@ -7,6 +7,7 @@ target 'TimeTracker' do
   config = use_native_modules!
   pod 'RNFBCrashlytics', :path => '../node_modules/@react-native-firebase/crashlytics'
   pod 'RNFBAuth', :path => '../node_modules/@react-native-firebase/auth'
+  pod 'GoogleSignIn'
   pod 'RNFBFirestore', :path => '../node_modules/@react-native-firebase/firestore'
   use_react_native!(
     :path => config[:reactNativePath],

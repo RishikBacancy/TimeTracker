@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
     width: 250,
     height: 40,
     fontFamily: 'Ubuntu-Medium',
+    paddingHorizontal: 10,
   },
 });
 

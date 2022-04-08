@@ -396,7 +396,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     alignSelf: 'center',
     fontFamily: 'Ubuntu-Regular',
-    fontStyle: 'oblique',
+    // fontStyle: 'oblique',
     textDecorationLine: 'underline',
     marginBottom: '2%',
   },

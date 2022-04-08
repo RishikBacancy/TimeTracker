@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Bubble, GiftedChat, Send} from 'react-native-gifted-chat';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Colors from '../Constants/Colors';
 import {AuthContext} from '../navigaion/AuthProvider';
@@ -48,9 +48,7 @@ const ChatScreen = props => {
       }
     });
 
-    return () => {
-      msgRef();
-    };
+    return () => {};
   }, [user.uid, userId]);
 
   const onSend = messageArray => {
@@ -79,11 +77,11 @@ const ChatScreen = props => {
     return (
       <Send {...props}>
         <View>
-          <MaterialCommunityIcons
-            name="send-circle"
+          <Ionicons
+            name="send"
             // eslint-disable-next-line react-native/no-inline-styles
             style={{marginBottom: 5, marginRight: 5}}
-            size={32}
+            size={28}
             color={Colors.primaryColor}
           />
         </View>

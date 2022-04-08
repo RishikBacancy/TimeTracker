@@ -7,6 +7,7 @@ import {
   Alert,
   TouchableOpacity,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
 import InputField from '../components/InputField';
 import SimpleButton from '../components/SimpleButton';

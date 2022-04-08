@@ -1,10 +1,11 @@
 import React, {createContext, useState} from 'react';
-import {Alert} from 'react-native';
+// import {Alert} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
 import firestore from '@react-native-firebase/firestore';
-import database from '@react-native-firebase/database';
+// import database from '@react-native-firebase/database';
+import appleAuth from '@invertase/react-native-apple-authentication';
 
 export const AuthContext = createContext();
 
@@ -186,6 +187,77 @@ export const AuthProvider = ({children}) => {
             await auth().signOut();
           } catch (e) {
             console.log(e);
+          }
+        },
+        appleLogin: async () => {
+          try {
+            const appleAuthRequestResponse = await appleAuth.performRequest({
+              requestedOperation: appleAuth.Operation.LOGIN,
+              requestedScopes: [
+                appleAuth.Scope.EMAIL,
+                appleAuth.Scope.FULL_NAME,
+              ],
+            });
+
+            // Ensure Apple returned a user identityToken
+            if (!appleAuthRequestResponse.identityToken) {
+              throw new Error(
+                'Apple Sign-In failed - no identify token returned',
+              );
+            }
+
+            // Create a Firebase credential from the response
+            const {identityToken, nonce} = appleAuthRequestResponse;
+            const appleCredential = auth.AppleAuthProvider.credential(
+              identityToken,
+              nonce,
+            );
+            return auth()
+              .signInWithCredential(appleCredential)
+              .then(data => {
+                let userData = {};
+
+                firestore()
+                  .collection('Users')
+                  .doc(auth().currentUser.uid)
+                  .get()
+                  .then(snap => {
+                    if (snap.exists) {
+                      //console.log(snap.get("userData"));
+                      userData = snap.get('userData');
+                      //console.log(userData)
+                      firestore()
+                        .collection('Users')
+                        .doc(auth().currentUser.uid)
+                        .set({
+                          userData,
+                        });
+                    } else {
+                      console.log('yesss else part!');
+                      userData.name = data.user.displayName;
+                      //console.log(userData.name);
+                      userData.email = data.user.email.toLowerCase();
+                      userData.phone = data.user.phoneNumber;
+                      userData.image = null;
+                      userData.userId = auth().currentUser.uid;
+
+                      firestore()
+                        .collection('Users')
+                        .doc(auth().currentUser.uid)
+                        .set({
+                          userData,
+                        });
+                    }
+                  });
+
+                //console.log(userData.name);
+
+                //firestore().collection("Users").doc(auth().currentUser.uid).set({
+                //userData
+                //});
+              });
+          } catch (e) {
+            console.log({e});
           }
         },
 

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Text, View, Button, StyleSheet, TouchableHighlight} from 'react-native';
+import {Text, View, Button, StyleSheet} from 'react-native';
 import Colors from '../Constants/Colors';
 
 const TimeTracking = props => {
