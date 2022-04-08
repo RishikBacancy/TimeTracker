@@ -1,10 +1,10 @@
 import React, {createContext, useState} from 'react';
-// import {Alert} from 'react-native';
+import {Alert} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
 import firestore from '@react-native-firebase/firestore';
-// import database from '@react-native-firebase/database';
+import database from '@react-native-firebase/database';
 
 export const AuthContext = createContext();
 
@@ -54,9 +54,10 @@ export const AuthProvider = ({children}) => {
                       console.log('yesss else part!');
                       userData.name = data.user.displayName;
                       //console.log(userData.name);
-                      userData.name = data.user.displayName;
                       userData.email = data.user.email.toLowerCase();
                       userData.phone = data.user.phoneNumber;
+                      userData.image = null;
+                      userData.userId = auth().currentUser.uid;
 
                       firestore()
                         .collection('Users')
@@ -101,7 +102,7 @@ export const AuthProvider = ({children}) => {
 
             return auth()
               .signInWithCredential(facebookCredential)
-              .then(fb_data => {
+              .then(data => {
                 let userData = {};
 
                 //userData.name = data.user.displayName;
@@ -123,9 +124,11 @@ export const AuthProvider = ({children}) => {
                           userData,
                         });
                     } else {
-                      userData.name = fb_data.user.displayName;
-                      userData.email = fb_data.user.email.toLowerCase();
-                      userData.phone = fb_data.user.phoneNumber;
+                      userData.name = data.user.displayName;
+                      userData.email = data.user.email.toLowerCase();
+                      userData.phone = data.user.phoneNumber;
+                      userData.image = null;
+                      userData.userId = auth().currentUser.uid;
 
                       firestore()
                         .collection('Users')
@@ -153,6 +156,8 @@ export const AuthProvider = ({children}) => {
                 userData.name = name;
                 userData.email = email.toLowerCase();
                 userData.phone = phone;
+                userData.image = null;
+                userData.userId = auth().currentUser.uid;
 
                 console.log(userData);
 

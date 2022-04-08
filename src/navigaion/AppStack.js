@@ -1,13 +1,13 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeScreen from '../screens/HomeScreen';
-// import FeedScreen from '../screens/FeedScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../Constants/Colors';
 import ChatScreen from '../screens/ChatScreen';
 import MessagesScreen from '../screens/MessagesScreen';
+import TimeTracking from '../screens/TimeTracking';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -56,6 +56,7 @@ const AppStack = () => {
         })}
       />
       <Tab.Screen name="Profile" component={ProfileScreen} />
+      {/* <Tab.Screen name="TimeTracking" component={TimeTracking} /> */}
     </Tab.Navigator>
   );
 };

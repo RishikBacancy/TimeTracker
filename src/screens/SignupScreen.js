@@ -6,7 +6,7 @@ import {
   Image,
   Alert,
   TouchableOpacity,
-  Platform,
+  ActivityIndicator,
 } from 'react-native';
 import InputField from '../components/InputField';
 import SimpleButton from '../components/SimpleButton';

@@ -7,11 +7,13 @@ import {
   Alert,
   TouchableOpacity,
   Platform,
+  ActivityIndicator,
 } from 'react-native';
 import InputField from '../components/InputField';
 import SimpleButton from '../components/SimpleButton';
 import SocialButton from '../components/SocialButton';
 import {AuthContext} from '../navigaion/AuthProvider';
+import Colors from '../Constants/Colors';
 
 const SigninScreen = ({navigation}) => {
   const [email, setEmail] = useState('');

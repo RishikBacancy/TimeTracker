@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity, Text} from 'react-native';
-
+import Colors from '../Constants/Colors';
 const SimpleButton = props => {
   return (
     <TouchableOpacity {...props} style={[styles.btnContainer, props.style]}>
@@ -12,7 +12,7 @@ const SimpleButton = props => {
 const styles = StyleSheet.create({
   btnContainer: {
     width: 150,
-    backgroundColor: '#f78c28',
+    backgroundColor: Colors.primaryColor,
     padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   textWrap: {
     fontFamily: 'Ubuntu-Regular',
     fontSize: 18,
-    color: '#4d4137',
+    color: 'black',
   },
 });
 
