@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import {Text, View, Button, StyleSheet} from 'react-native';
+import {Text, View, StyleSheet} from 'react-native';
 import Colors from '../Constants/Colors';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const TimeTracking = props => {
   const [time, setTime] = useState({
@@ -53,17 +54,21 @@ const TimeTracking = props => {
         </Text>
       </View>
       <View style={styles.buttonParent}>
-        <Button
+        <Icon
           // style={styles.button}
-          title="Start"
+          name="play"
+          size={25}
+          color={Colors.primaryColor}
           onPress={() => {
             setStart(true);
             // setStop(false);
           }}
         />
-        <Button
+        <Icon
           // style={styles.button}
-          title="Stop"
+          name="pause"
+          size={25}
+          color={Colors.primaryColor}
           onPress={() => {
             // setStop(true);
             setStart(false);
@@ -108,9 +113,9 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     borderWidth: 1,
-    borderRadius: 80,
+    borderRadius: 10,
     borderColor: Colors.primaryColor,
-    backgroundColor: Colors.primaryColor,
+    // backgroundColor: Colors.primaryColor,
     paddingLeft: '8%',
     paddingRight: '8%',
     paddingTop: '.5%',
@@ -125,20 +130,9 @@ const styles = StyleSheet.create({
   buttonParent: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-around',
     marginTop: '5%',
-  },
-
-  button: {
-    backgroundColor: Colors.primaryColor,
-    paddingBottom: '5%',
-    paddingLeft: '5%',
-    paddingRight: '5%',
-    display: 'flex',
-    borderRadius: 50,
-    borderWidth: 2,
-    borderColor: Colors.accentColor,
-    height: 30,
+    width: '50%',
   },
 
   // buttonText: {

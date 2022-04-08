@@ -203,12 +203,22 @@ const HomeScreen = props => {
           keyExtractor={(item, index) => index.toString()}
           renderItem={({item}) => (
             <Card style={styles.cardWrap}>
-              <Text style={styles.cardTaskName}>{item.name}</Text>
-              <Text style={styles.cardTaskDescription}>
-                Description: {item.description}
-              </Text>
-              <Text style={styles.cardTaskType}>Type: {item.taskType}</Text>
-              <TimeTracking />
+              <View style={styles.infoWrap}>
+                <Text style={styles.cardTaskName}>{item.name}</Text>
+                <Text style={styles.cardTaskDescription}>
+                  Description: {item.description}
+                </Text>
+                <Text style={styles.cardTaskType}>Type: {item.taskType}</Text>
+                <TimeTracking />
+              </View>
+              <View style={styles.separator}>
+                <Ionicons
+                  name="trash"
+                  size={30}
+                  style={styles.deleteTask}
+                  onPress={() => {}}
+                />
+              </View>
             </Card>
           )}
         />
@@ -389,8 +399,25 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   cardWrap: {
+    flexDirection: 'row',
     marginVertical: 10,
     marginHorizontal: 20,
+  },
+  infoWrap: {
+    marginVertical: 10,
+    marginHorizontal: 20,
+  },
+  separator: {
+    borderLeftWidth: 1,
+    borderColor: '#ccc',
+    borderStyle: 'solid',
+    paddingHorizontal: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  deleteTask: {
+    paddingRight: 20,
+    color: 'red',
   },
   cardTaskName: {
     fontSize: 30,
@@ -401,14 +428,16 @@ const styles = StyleSheet.create({
     marginBottom: '2%',
   },
   cardTaskDescription: {
-    fontSize: 18,
-    marginTop: '1%',
+    fontSize: 16,
+    marginTop: '5%',
+    marginLeft: '5%',
     fontStyle: 'italic',
     fontFamily: 'Ubuntu-Regular',
   },
   cardTaskType: {
-    fontSize: 16,
-    marginTop: '3%',
+    marginLeft: '5%',
+    fontSize: 14,
+    marginTop: '5%',
     fontStyle: 'italic',
     fontFamily: 'Ubuntu-Regular',
     color: 'green',

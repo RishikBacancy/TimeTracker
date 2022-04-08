@@ -13,15 +13,15 @@ const SocialButton = ({
     <TouchableOpacity
       style={[
         styles.btnContainer,
-        {backgroundColor: btnBgColor, borderColor: iconColor},
+        {backgroundColor: iconColor, borderColor: iconColor},
       ]}
       {...extra}>
       <View style={styles.iconContainer}>
-        <Icon name={iconName} color={iconColor} size={35} />
+        <Icon name={iconName} color="white" size={35} />
       </View>
 
       <View style={styles.textContainer}>
-        <Text style={[styles.textWrap, {color: iconColor}]}>{btnTitle}</Text>
+        <Text style={[styles.textWrap]}>{btnTitle}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
   textWrap: {
     fontFamily: 'Ubuntu-Regular',
     fontSize: 18,
+    color: 'white',
   },
 });
 
