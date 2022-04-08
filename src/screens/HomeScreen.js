@@ -64,12 +64,13 @@ const HomeScreen = (props) => {
 					}
 				});
 			}
-			//console.log(taskData.filter(item => item.taskType === "Personal"));
+			
 			setTaskList(taskData);
 			setFilterList(taskData);
-			//setProfTask(taskData.filter(item => item.taskType === "Professional"));
-			//setPerTask(taskData.filter(item => item.taskType === "Personal"));
-			//setProjectData(taskData);
+			setAllTask(true);
+			setProfTask(false);
+			setPerTask(false);
+			
 		});
 
 		return () => {
@@ -115,28 +116,37 @@ const HomeScreen = (props) => {
 		}
 	};
 
-	const setStatusFilter = (filterOption) => {
-		setFilterOption(filterOption);
+	const setStatusFilter = (option) => {
 
-		if (filterOption !== 'All') {
-			setFilterList(taskList.filter((item) => item.taskType === filterOption));
+		if (option !== 'All') {
+			
+			setFilterList(taskList.filter((item) => item.taskType === option));
 			//etProjectData();
 			//setFilterList(profTask);
-			if (filterOption === 'Professional') {
+			if (option === 'Professional') {
 				setAllTask(false);
 				setPerTask(false);
 				setProfTask(true);
-			} else if (filterOption === 'Personal') {
+
+				
+			} else if (option === 'Personal') {
 				setAllTask(false);
 				setPerTask(true);
 				setProfTask(false);
 			}
+
+			
+			setFilterOption(option);
+
 		} else {
 			setFilterList(taskList);
 			setAllTask(true);
 			setPerTask(false);
 			setProfTask(false);
+			setFilterOption(option);
 		}
+
+		
 	};
 
 	return (
