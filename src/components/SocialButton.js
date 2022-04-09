@@ -6,19 +6,19 @@ const SocialButton = ({btnTitle, btnBgColor, iconName, iconColor, ...extra}) =>
 {
 
     return(
-        <TouchableOpacity style={[styles.btnContainer, {backgroundColor: btnBgColor,borderColor: iconColor}]} {...extra}>
+        <TouchableOpacity style={[styles.btnContainer, {backgroundColor: iconColor,borderColor: iconColor}]} {...extra}>
 
             <View style={styles.iconContainer}>  
                 <Icon
                     name={iconName}
-                    color={iconColor}
+                    color={"white"}
                     size={35}
                 />
             </View>
 
             
             <View style={styles.textContainer}>
-                <Text style={[styles.textWrap,{color:iconColor}]}>
+                <Text style={[styles.textWrap,{color:"white"}]}>
                     {btnTitle}
                 </Text>
             </View>
