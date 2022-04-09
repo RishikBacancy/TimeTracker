@@ -324,10 +324,10 @@ const ProfileScreen = props => {
 
         <View style={styles.editBtn}>
           <Icon
-            name="ios-create-outline"
+            name={editMode?"close-circle-outline":"ios-create-outline"}
             size={25}
-            color={Colors.accentColor}
-            onPress={() => setEditMode(true)}
+            color={Colors.primaryColor}
+            onPress={() => setEditMode(!editMode)}
           />
         </View>
       </Card>
@@ -364,7 +364,8 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   cardWrap: {
-    width: '90%',
+    width: '80%',
+    paddingVertical:20,
   },
   profilePicture: {
     height: 100,
