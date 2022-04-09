@@ -1,56 +1,57 @@
-import React from "react";
-import { StyleSheet, TouchableOpacity, Text, View} from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
+import React from 'react';
+import {StyleSheet, TouchableOpacity, Text, View} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-const SocialButton = ({btnTitle, btnBgColor, iconName, iconColor, ...extra}) =>
-{
+const SocialButton = ({
+  btnTitle,
+  btnBgColor,
+  iconName,
+  iconColor,
+  ...extra
+}) => {
+  return (
+    <TouchableOpacity
+      style={[
+        styles.btnContainer,
+        {backgroundColor: iconColor, borderColor: iconColor},
+      ]}
+      {...extra}>
+      <View style={styles.iconContainer}>
+        <Icon name={iconName} color="white" size={35} />
+      </View>
 
-    return(
-        <TouchableOpacity style={[styles.btnContainer, {backgroundColor: iconColor,borderColor: iconColor}]} {...extra}>
-
-            <View style={styles.iconContainer}>  
-                <Icon
-                    name={iconName}
-                    color={"white"}
-                    size={35}
-                />
-            </View>
-
-            
-            <View style={styles.textContainer}>
-                <Text style={[styles.textWrap,{color:"white"}]}>
-                    {btnTitle}
-                </Text>
-            </View>
-            
-        </TouchableOpacity>
-    );
-}
+      <View style={styles.textContainer}>
+        <Text style={[styles.textWrap]}>{btnTitle}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
 
 const styles = StyleSheet.create({
-    btnContainer:{
-        width:250,
-        height:50,
-        flexDirection:"row",
-        borderRadius:5,
-        marginTop:10,
-        borderWidth:1,
-    },
-    iconContainer:{
-        height:50,
-        width:50,
-        paddingHorizontal:10,
-        paddingVertical:5,
-    },
-    textContainer:{
-        justifyContent:"center",
-        alignItems:"center",
-        paddingHorizontal:10,
-    },
-    textWrap:{
-        fontFamily:"Ubuntu-Regular",
-        fontSize:18,
-    }
+  btnContainer: {
+    width: 250,
+    height: 50,
+    flexDirection: 'row',
+    borderRadius: 5,
+    marginTop: 10,
+    borderWidth: 1,
+  },
+  iconContainer: {
+    height: 50,
+    width: 50,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+  },
+  textContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+  },
+  textWrap: {
+    fontFamily: 'Ubuntu-Regular',
+    fontSize: 18,
+    color: 'white',
+  },
 });
 
 export default SocialButton;

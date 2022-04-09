@@ -5,9 +5,9 @@ import Colors from "../Constants/Colors";
 
 const TimeHandler = props => 
 {
-    const [ sec, setSec ] = useState(props.tSec);
-    const [ min, setMin ] = useState(props.tMin);
-    const [ hr, setHr ] = useState(props.tSec);
+    const [ sec, setSec ] = useState(0);
+    const [ min, setMin ] = useState(0);
+    const [ hr, setHr ] = useState(0);
     const [ runTime, setRunTime] = useState(false);
 
     var timer;
