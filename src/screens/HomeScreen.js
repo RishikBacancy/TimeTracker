@@ -194,7 +194,7 @@ const HomeScreen = (props) => {
 					<View style={styles.textWrap}>
 						<Text style={styles.simpleText}>No Data found!</Text>
 					</View>
-				) : filterList.length == 0 ? (
+				) : typeof(filterList) !== "undefined" ? filterList.length == 0 ? (
 					<View style={styles.textWrap}>
 						<Text style={styles.simpleText}>No Data found!</Text>
 					</View>
@@ -216,7 +216,7 @@ const HomeScreen = (props) => {
 							</Card>
 						)}
 					/>
-				)}
+				):null}
 			</View>
 
 			<Modal animationType="slide" visible={modalBtn} transparent={true}>
