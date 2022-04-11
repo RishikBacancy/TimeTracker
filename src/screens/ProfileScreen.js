@@ -292,9 +292,10 @@ const ProfileScreen = props => {
             <TextInput
               style={styles.detailEditText}
               placeholder="Phone Number"
-              onChangeText={data => setUPhone(data)}
+              onChangeText={data => setUPhone(data.replace(/[^0-9]/g,""))}
               value={uPhone}
               numberOfLines={1}
+              maxLength={10}
               keyboardType="number-pad"
               placeholderTextColor="#ccc"
             />

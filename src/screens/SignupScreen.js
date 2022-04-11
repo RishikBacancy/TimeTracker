@@ -63,7 +63,7 @@ const SignUpScreen = ({navigation}) => {
           iconName={'phone'}
           placeholder="Phone Number"
           keyboardType="phone-pad"
-          onChangeText={data => setPhone(data)}
+          onChangeText={data => setPhone(data.replace(/[^0-9]/g,""))}
           inputValue={phone}
           numberOfLines={1}
         />
