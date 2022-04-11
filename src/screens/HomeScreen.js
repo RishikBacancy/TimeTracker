@@ -206,7 +206,7 @@ const HomeScreen = (props) => {
 							<Card style={styles.cardWrap}>
 								<View style={styles.infoWrap}>
 									<Text style={styles.cardTaskName}>{item.name}</Text>
-									<Text style={styles.cardTaskDescription}>Description: {item.description}</Text>
+									<Text style={styles.cardTaskDescription}>{item.description}</Text>
 									<Text style={styles.cardTaskType}>Type: {item.taskType}</Text>
 									<TimeTracking />
 								</View>
@@ -384,7 +384,7 @@ const styles = StyleSheet.create({
 	flatlistWrap: {
 		width: '100%',
 		height: '90%',
-		marginTop: 10
+		marginTop: 10,
 	},
 	cardWrap: {
 		flexDirection: 'row',
@@ -401,24 +401,25 @@ const styles = StyleSheet.create({
 		borderLeftWidth: 1,
 		borderColor: '#ccc',
 		borderStyle: 'solid',
-		paddingHorizontal: 15,
+		paddingHorizontal: 5,
 		alignItems: 'center',
 		justifyContent: 'center'
 	},
 	deleteTask: {
-		color: 'red'
+		color: "red",
 	},
 	cardTaskName: {
 		fontSize: 25,
-		alignSelf: 'center',
+		textAlign:"center",
 		fontFamily: 'Ubuntu-Bold',
-		marginBottom: '2%'
+		marginBottom: '2%',
+		color: Colors.primaryColor,
 	},
 	cardTaskDescription: {
 		fontSize: 16,
 		marginTop: '5%',
 		marginLeft: '5%',
-		fontFamily: 'Ubuntu-Regular'
+		fontFamily: 'Ubuntu-Regular',
 	},
 	cardTaskType: {
 		marginLeft: '5%',
