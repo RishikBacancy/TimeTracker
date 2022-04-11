@@ -190,11 +190,11 @@ const HomeScreen = (props) => {
 			</View>
 
 			<View style={styles.flatlistWrap}>
-				{taskList.length == 0 ? (
+				{taskList.length === 0 ? (
 					<View style={styles.textWrap}>
 						<Text style={styles.simpleText}>No Data found!</Text>
 					</View>
-				) : typeof(filterList) !== "undefined" ? filterList.length == 0 ? (
+				) : typeof(filterList) !== "undefined" ? filterList.length === 0 ? (
 					<View style={styles.textWrap}>
 						<Text style={styles.simpleText}>No Data found!</Text>
 					</View>

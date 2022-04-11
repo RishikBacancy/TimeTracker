@@ -5,12 +5,14 @@ const SimpleButton = props => {
   return (
     <TouchableOpacity {...props} style={[styles.btnContainer, props.style]}>
       <Text style={styles.textWrap}>{props.btnTitle}</Text>
+      {props.children}
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   btnContainer: {
+    flexDirection: 'row',
     width: 150,
     backgroundColor: Colors.primaryColor,
     padding: 10,
