@@ -1,5 +1,5 @@
-import React, {useContext, useEffect, useReducer, useState} from 'react';
-import {View, Text, Button, StyleSheet, FlatList} from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
+import {FlatList} from 'react-native';
 import {
   Container,
   Card,
@@ -8,8 +8,6 @@ import {
   UserImg,
   UserInfoText,
   UserName,
-  PostTime,
-  MessageText,
   TextSection,
 } from '../styles/MessageStyles';
 import firestore from '@react-native-firebase/firestore';
@@ -31,6 +29,7 @@ const MessagesScreen = ({navigation}) => {
 
         console.log(userList);
 
+        // eslint-disable-next-line eqeqeq
         userList = userList.filter(details => details.userId != user.uid);
 
         console.log(userList);
@@ -81,11 +80,3 @@ const MessagesScreen = ({navigation}) => {
 };
 
 export default MessagesScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

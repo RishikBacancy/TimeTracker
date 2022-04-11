@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState, useRef} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -64,6 +64,7 @@ const ProfileScreen = props => {
           setIsLoading(false);
         }
       });
+    return () => {};
   }, [user]);
 
   const resetHandler = () => {
@@ -292,7 +293,7 @@ const ProfileScreen = props => {
             <TextInput
               style={styles.detailEditText}
               placeholder="Phone Number"
-              onChangeText={data => setUPhone(data.replace(/[^0-9]/g,""))}
+              onChangeText={data => setUPhone(data.replace(/[^0-9]/g, ''))}
               value={uPhone}
               numberOfLines={1}
               maxLength={10}
@@ -318,21 +319,26 @@ const ProfileScreen = props => {
         ) : (
           <SimpleButton
             style={styles.btnWrap}
-            btnTitle={'LogOut'}
-            onPress={() => logout()}
+            btnTitle={'Reset Password'}
+            onPress={resetHandler}
           />
         )}
 
         <View style={styles.editBtn}>
           <Icon
-            name={editMode?"close-circle-outline":"ios-create-outline"}
+            name={editMode ? 'close-circle-outline' : 'ios-create-outline'}
             size={25}
             color={Colors.primaryColor}
             onPress={() => setEditMode(!editMode)}
           />
         </View>
       </Card>
-      <SimpleButton btnTitle={'Reset password'} onPress={resetHandler} />
+      <SimpleButton
+        style={styles.btnWrap}
+        btnTitle={'LogOut'}
+        onPress={() => logout()}>
+        <Icon name="log-out-outline" size={25} style={styles.iconWrap} />
+      </SimpleButton>
     </View>
   );
 };
@@ -366,7 +372,7 @@ const styles = StyleSheet.create({
   },
   cardWrap: {
     width: '80%',
-    paddingVertical:20,
+    paddingVertical: 20,
   },
   profilePicture: {
     height: 100,
@@ -427,6 +433,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 10,
     right: 10,
+  },
+  iconWrap: {
+    paddingLeft: 7,
   },
 });
 

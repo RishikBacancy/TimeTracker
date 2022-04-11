@@ -12,7 +12,7 @@ const AuthStack = () => {
   useEffect(() => {
     GoogleSignin.configure({
       iosClientId:
-      '1051065742352-p07ennfm0bn22925s7qmij414m89ak91.apps.googleusercontent.com',
+        '1051065742352-p07ennfm0bn22925s7qmij414m89ak91.apps.googleusercontent.com',
       webClientId:
         '1051065742352-ov5q8231cn349a7qnhnc4fqmqasbngeo.apps.googleusercontent.com',
     });

@@ -32,13 +32,13 @@ const AppStack = () => {
         tabBarIcon: ({focused, color, size}) => {
           let iconName;
 
-					if (route.name === 'Home') {
-						iconName = focused ? 'ios-home' : 'ios-home-outline';
-					} else if (route.name === 'Message') {
-						iconName = focused ? 'chatbubbles' : 'chatbubbles-outline';
-					} else if (route.name === 'Profile') {
-						iconName = focused ? 'ios-person' : 'ios-person-outline';
-					}
+          if (route.name === 'Home') {
+            iconName = focused ? 'ios-home' : 'ios-home-outline';
+          } else if (route.name === 'Message') {
+            iconName = focused ? 'chatbubbles' : 'chatbubbles-outline';
+          } else if (route.name === 'Profile') {
+            iconName = focused ? 'ios-person' : 'ios-person-outline';
+          }
 
           return <Icon name={iconName} size={size} color={color} />;
         },

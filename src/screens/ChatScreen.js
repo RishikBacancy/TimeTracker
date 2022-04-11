@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import React, {useState, useEffect, useContext} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Bubble, GiftedChat, Send} from 'react-native-gifted-chat';
@@ -48,7 +49,9 @@ const ChatScreen = props => {
       }
     });
 
-    return () => {};
+    return () => {
+      setMessages();
+    };
   }, [user.uid, userId]);
 
   const onSend = messageArray => {

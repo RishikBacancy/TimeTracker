@@ -6,7 +6,6 @@ import {
   Image,
   Alert,
   TouchableOpacity,
-  ActivityIndicator,
   Platform,
 } from 'react-native';
 import InputField from '../components/InputField';
@@ -63,7 +62,7 @@ const SignUpScreen = ({navigation}) => {
           iconName={'phone'}
           placeholder="Phone Number"
           keyboardType="phone-pad"
-          onChangeText={data => setPhone(data.replace(/[^0-9]/g,""))}
+          onChangeText={data => setPhone(data.replace(/[^0-9]/g, ''))}
           inputValue={phone}
           numberOfLines={1}
         />

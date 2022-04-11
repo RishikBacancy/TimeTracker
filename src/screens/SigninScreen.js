@@ -7,13 +7,11 @@ import {
   Alert,
   TouchableOpacity,
   Platform,
-  ActivityIndicator,
 } from 'react-native';
 import InputField from '../components/InputField';
 import SimpleButton from '../components/SimpleButton';
 import SocialButton from '../components/SocialButton';
 import {AuthContext} from '../navigaion/AuthProvider';
-import Colors from '../Constants/Colors';
 
 const SigninScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -63,7 +61,9 @@ const SigninScreen = ({navigation}) => {
           numberOfLines={1}
         />
 
-        <TouchableOpacity style={styles.forgotWrap} onPress={() => navigation.navigate('Forgot')}>
+        <TouchableOpacity
+          style={styles.forgotWrap}
+          onPress={() => navigation.navigate('Forgot')}>
           <Text style={styles.simpleText}>Forgot Password?</Text>
         </TouchableOpacity>
 
@@ -114,13 +114,13 @@ const styles = StyleSheet.create({
   },
   simpleText: {
     fontSize: 15,
-    marginBottom:10,
+    marginBottom: 10,
     fontWeight: '500',
     color: '#666',
     fontFamily: 'Ubuntu-Medium',
   },
-  forgotWrap:{
-    alignSelf:"flex-end",
+  forgotWrap: {
+    alignSelf: 'flex-end',
   },
   formContainer: {
     marginBottom: 75,
