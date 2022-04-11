@@ -43,26 +43,29 @@ const TimeTracking = (props) => {
 				<Text style={styles.child}>{sec < 10 ? ':0' + sec : ':' + sec}</Text>
 			</View>
 			<View style={styles.buttonParent}>
-				<Icon
-					// style={styles.button}
-					name="play"
-					size={25}
-					color={Colors.primaryColor}
-					onPress={() => {
-						setStart(true);
-						// setStop(false);
-					}}
-				/>
-				<Icon
-					// style={styles.button}
-					name="pause"
-					size={25}
-					color={Colors.primaryColor}
-					onPress={() => {
-						// setStop(true);
-						setStart(false);
-					}}
-				/>
+				{start ? (
+					<Icon
+						// style={styles.button}
+						name="pause"
+						size={25}
+						color={Colors.primaryColor}
+						onPress={() => {
+							// setStop(true);
+							setStart(false);
+						}}
+					/>
+				) : (
+					<Icon
+						// style={styles.button}
+						name="play"
+						size={25}
+						color={Colors.primaryColor}
+						onPress={() => {
+							setStart(true);
+							// setStop(false);
+						}}
+					/>
+				)}
 			</View>
 		</View>
 	);
@@ -73,8 +76,9 @@ const styles = StyleSheet.create({
 		flex: 1,
 		display: 'flex',
 		alignItems: 'center',
-		justifyContent: 'flex-start',
-		paddingTop: '8%'
+		justifyContent: "space-between",
+		paddingTop: '8%',
+		flexDirection:"row",
 	},
 	parent: {
 		display: 'flex',
@@ -94,13 +98,9 @@ const styles = StyleSheet.create({
 	},
 
 	buttonParent: {
-		display: 'flex',
-		flexDirection: 'row',
-		justifyContent: 'space-around',
-		marginTop: '5%',
-		width: '50%'
+		width: '50%',
+		marginHorizontal:20,
 	}
-
 });
 
 export default TimeTracking;

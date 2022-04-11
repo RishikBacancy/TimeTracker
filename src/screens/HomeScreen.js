@@ -9,7 +9,7 @@ import Colors from '../Constants/Colors';
 import InputField from '../components/InputField';
 import { Dropdown } from 'react-native-element-dropdown';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import TimeTracking from './TimeTracking';
+import TimeTracking from '../components/TimeTracking';
 
 const HomeScreen = (props) => {
 

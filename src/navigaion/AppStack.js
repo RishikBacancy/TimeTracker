@@ -7,7 +7,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../Constants/Colors';
 import ChatScreen from '../screens/ChatScreen';
 import MessagesScreen from '../screens/MessagesScreen';
-import TimeTracking from '../screens/TimeTracking';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
