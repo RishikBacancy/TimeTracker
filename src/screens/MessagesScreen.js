@@ -29,11 +29,11 @@ const MessagesScreen = ({navigation}) => {
       if (querySanp != null) {
         let userList = querySanp.docs.map(details => details.get('userData'));
 
-        console.log(userList);
+        //console.log(userList);
 
         userList = userList.filter(details => details.userId != user.uid);
 
-        console.log(userList);
+        //console.log(userList);
         setUsers(userList);
       }
 

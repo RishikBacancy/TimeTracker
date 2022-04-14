@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {
   View,
   Text,
@@ -13,13 +13,23 @@ import InputField from '../components/InputField';
 import SimpleButton from '../components/SimpleButton';
 import SocialButton from '../components/SocialButton';
 import {AuthContext} from '../navigaion/AuthProvider';
-import Colors from '../Constants/Colors';
+import crashlytics from "@react-native-firebase/crashlytics";
 
 const SigninScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const {login, googleLogin, fbLogin, appleLogin} = useContext(AuthContext);
+
+
+  // useEffect(()=>{
+
+  //   crashlytics().crash();
+
+  //   return()=>{
+  //     crashlytics().log("Did unmounted");
+  //   }
+  // })
 
   const signInHandler = () => {
     if (email === '' || password === '') {

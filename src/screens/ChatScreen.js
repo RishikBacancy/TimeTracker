@@ -59,7 +59,7 @@ const ChatScreen = props => {
       sentTo: userId,
     };
 
-    console.log(myMsg);
+    //  console.log(myMsg);
 
     setMessages(previousMessages => GiftedChat.append(previousMessages, myMsg));
 
