@@ -9,6 +9,7 @@ import SimpleButton from '../components/SimpleButton';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as ImagePicker from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
+import { encryptionData, decryptionData } from '../components/Encryption';
 
 const ProfileScreen = (props) => {
 	const { logout, forgotPswd } = useContext(AuthContext);
@@ -43,9 +44,9 @@ const ProfileScreen = (props) => {
 					//console.log(documentSnapshot.get("profileImage"));
 					//console.log(userData)
 
-					setUName(userData.name);
-					setUEmail(userData.email);
-					setUPhone(userData.phone);
+					setUName(decryptionData(user,userData.name));
+					setUEmail(decryptionData(user,userData.email));
+					setUPhone(decryptionData(user,userData.phone));
 					setPic(userData.image);
 					setIsLoading(false);
 				}
@@ -163,9 +164,9 @@ const ProfileScreen = (props) => {
 
 		let userData = {};
 
-		userData.name = uName;
-		userData.email = uEmail;
-		userData.phone = uPhone;
+		userData.name = encryptionData(user,uName);
+		userData.email = encryptionData(user,uEmail);
+		userData.phone = encryptionData(user,uPhone);
 		userData.image = pic;
 		userData.userId = user;
 

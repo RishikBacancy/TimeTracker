@@ -14,6 +14,7 @@ import {
 } from '../styles/MessageStyles';
 import firestore from '@react-native-firebase/firestore';
 import {AuthContext} from '../navigaion/AuthProvider';
+import { decryptionData } from '../components/Encryption';
 
 const MessagesScreen = ({navigation}) => {
   const {user} = useContext(AuthContext);
@@ -53,7 +54,7 @@ const MessagesScreen = ({navigation}) => {
           <Card
             onPress={() =>
               navigation.navigate('Chat', {
-                userName: item.name,
+                userName: decryptionData(item.userId,item.name),
                 userId: item.userId,
               })
             }>
@@ -67,7 +68,7 @@ const MessagesScreen = ({navigation}) => {
               </UserImgWrapper>
               <TextSection>
                 <UserInfoText>
-                  <UserName>{item.name}</UserName>
+                  <UserName>{decryptionData(item.userId,item.name)}</UserName>
                   {/* <PostTime>{item.messageTime}</PostTime> */}
                 </UserInfoText>
                 {/* <MessageText>{item.messageText}</MessageText> */}
