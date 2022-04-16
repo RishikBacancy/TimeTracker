@@ -55,6 +55,10 @@ const MessagesScreen = ({navigation}) => {
               navigation.navigate('Chat', {
                 userName: decryptionData(item.userId, item.name),
                 userId: item.userId,
+                userAvatar:
+                  item.image === null
+                    ? require('../../assets/blankPic.png')
+                    : item.image,
               })
             }>
             <UserInfo>

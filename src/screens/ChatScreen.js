@@ -14,7 +14,7 @@ const ChatScreen = props => {
 
   const {user} = useContext(AuthContext);
 
-  const {userId} = props.route.params;
+  const {userId, userAvatar} = props.route.params;
 
   //console.log(userId);
 
@@ -129,8 +129,10 @@ const ChatScreen = props => {
       <GiftedChat
         messages={messages}
         onSend={messages => onSend(messages)}
+        showAvatarForEveryMessage={true}
         user={{
           _id: user.uid,
+          avatar: userAvatar,
         }}
         renderBubble={renderBubble}
         alwaysShowSend

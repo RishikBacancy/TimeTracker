@@ -12,7 +12,7 @@ export const encryptionData = (id, data) => {
     //console.log("utf8add = "+utf8Data);
     const encodeData = base64.encode(utf8Data);
     //console.log("base64add = "+encodeData);
-    return preText + encodeData;
+    return preText + id + encodeData;
   }
   return data;
 };
@@ -21,8 +21,9 @@ export const decryptionData = (id, data) => {
   if (data && typeof data === 'string' && data.startsWith(preText) === true) {
     //console.log("=====================");
     const newData = data.replace(preText, '');
+    const strongEncryptedData = newData.replace(id, '');
     //console.log("saltRemove = "+newData);
-    const utf8Data = base64.decode(newData);
+    const utf8Data = base64.decode(strongEncryptedData);
     //console.log("base64Remove = "+utf8Data);
     const decodeData = utf8.decode(utf8Data);
     //console.log("utf8Remove = "+decodeData);
