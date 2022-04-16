@@ -269,7 +269,7 @@ const HomeScreen = props => {
           <View style={styles.modalContainer}>
             <InputField
               iconName={'book'}
-              placeholder="Project Name"
+              placeholder="Task Name"
               onChangeText={data => setTaskName(data)}
               inputValue={taskName}
               numberOfLines={1}
