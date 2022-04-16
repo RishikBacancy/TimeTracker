@@ -506,6 +506,8 @@
 			baseConfigurationReference = BE1BEAE1F01C2158046591CC /* Pods-TimeTracker-TimeTrackerTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = YALKVBH436;
+				EXCLUDED_ARCHS = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",

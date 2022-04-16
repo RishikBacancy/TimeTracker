@@ -22,8 +22,10 @@
     "@react-navigation/native": "^6.0.8",
     "@react-navigation/native-stack": "^6.5.0",
     "@wojtekmaj/react-timerange-picker": "^3.5.0",
+    "base-64": "^1.0.0",
     "react": "17.0.2",
     "react-native": "^0.67.3",
+    "react-native-base64": "^0.2.1",
     "react-native-element-dropdown": "^1.8.7",
     "react-native-fbsdk-next": "^7.3.3",
     "react-native-gifted-chat": "^0.16.3",
@@ -32,7 +34,8 @@
     "react-native-screens": "^3.13.1",
     "react-native-sound": "^0.11.2",
     "react-native-vector-icons": "^9.1.0",
-    "styled-components": "^5.3.5"
+    "styled-components": "^5.3.5",
+    "utf8": "^3.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

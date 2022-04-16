@@ -63,6 +63,7 @@ const SignUpScreen = ({navigation}) => {
           placeholder="Phone Number"
           keyboardType="phone-pad"
           onChangeText={data => setPhone(data.replace(/[^0-9]/g, ''))}
+          maxLength={10}
           inputValue={phone}
           numberOfLines={1}
         />

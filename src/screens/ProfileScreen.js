@@ -18,6 +18,7 @@ import SimpleButton from '../components/SimpleButton';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as ImagePicker from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
+import {encryptionData, decryptionData} from '../components/Encryption';
 
 const ProfileScreen = props => {
   const {logout, forgotPswd} = useContext(AuthContext);
@@ -57,14 +58,13 @@ const ProfileScreen = props => {
           //console.log(documentSnapshot.get("profileImage"));
           //console.log(userData)
 
-          setUName(userData.name);
-          setUEmail(userData.email);
-          setUPhone(userData.phone);
+          setUName(decryptionData(user, userData.name));
+          setUEmail(decryptionData(user, userData.email));
+          setUPhone(decryptionData(user, userData.phone));
           setPic(userData.image);
           setIsLoading(false);
         }
       });
-    return () => {};
   }, [user]);
 
   const resetHandler = () => {
@@ -90,28 +90,29 @@ const ProfileScreen = props => {
       response => {
         console.log(response);
 
-        let uriImage = {uri: response.assets.map(({uri}) => uri)};
-        console.log('=================\n' + uriImage);
-        const uploadImage = reference.putFile(uriImage.uri[0]);
+        if (!response.didCancel) {
+          let uriImage = {uri: response.assets.map(({uri}) => uri)};
+          console.log('=================\n' + uriImage);
+          const uploadImage = reference.putFile(uriImage.uri[0]);
 
-        uploadImage.on(
-          'state_changed',
-          imageSnapshot => {
-            console.log(
-              imageSnapshot.bytesTransferred + '/' + imageSnapshot.totalBytes,
-            );
-          },
-          err => {
-            console.log(err);
-          },
-          () => {
-            uploadImage.snapshot.ref.getDownloadURL().then(imageUrl => {
-              console.log(imageUrl);
-              setPic(imageUrl);
-            });
-          },
-        );
-
+          uploadImage.on(
+            'state_changed',
+            imageSnapshot => {
+              console.log(
+                imageSnapshot.bytesTransferred + '/' + imageSnapshot.totalBytes,
+              );
+            },
+            err => {
+              console.log(err);
+            },
+            () => {
+              uploadImage.snapshot.ref.getDownloadURL().then(imageUrl => {
+                console.log(imageUrl);
+                setPic(imageUrl);
+              });
+            },
+          );
+        }
         //setPic(uriImage.uri[0]);
       },
     );
@@ -134,33 +135,35 @@ const ProfileScreen = props => {
         //console.log(typeof(response.uri));
         //console.log(response.assets.map(({ base64 }) => (base64)));
         //console.log('=================\n' + uriImage);
-        let uriImage = {uri: response.assets.map(({uri}) => uri)};
+        if (!response.didCancel) {
+          let uriImage = {uri: response.assets.map(({uri}) => uri)};
 
-        //setBasePic(response.assets.map(({ base64 }) => (base64)));
-        //setPic(response.uri);
-        //firestore.collection("Users").doc(user).
+          //setBasePic(response.assets.map(({ base64 }) => (base64)));
+          //setPic(response.uri);
+          //firestore.collection("Users").doc(user).
 
-        //console.log('=================\n' + uriImage);
-        //console.log(response.assets.find("base64"));
-        const uploadImage = reference.putFile(uriImage.uri[0]);
+          //console.log('=================\n' + uriImage);
+          //console.log(response.assets.find("base64"));
+          const uploadImage = reference.putFile(uriImage.uri[0]);
 
-        uploadImage.on(
-          'state_changed',
-          imageSnapshot => {
-            console.log(
-              imageSnapshot.bytesTransferred + '/' + imageSnapshot.totalBytes,
-            );
-          },
-          err => {
-            console.log(err);
-          },
-          () => {
-            uploadImage.snapshot.ref.getDownloadURL().then(imageUrl => {
-              console.log(imageUrl);
-              setPic(imageUrl);
-            });
-          },
-        );
+          uploadImage.on(
+            'state_changed',
+            imageSnapshot => {
+              console.log(
+                imageSnapshot.bytesTransferred + '/' + imageSnapshot.totalBytes,
+              );
+            },
+            err => {
+              console.log(err);
+            },
+            () => {
+              uploadImage.snapshot.ref.getDownloadURL().then(imageUrl => {
+                console.log(imageUrl);
+                setPic(imageUrl);
+              });
+            },
+          );
+        }
 
         //setPic(uriImage.uri[0]);
       },
@@ -177,9 +180,9 @@ const ProfileScreen = props => {
 
     let userData = {};
 
-    userData.name = uName;
-    userData.email = uEmail;
-    userData.phone = uPhone;
+    userData.name = encryptionData(user, uName);
+    userData.email = encryptionData(user, uEmail);
+    userData.phone = encryptionData(user, uPhone);
     userData.image = pic;
     userData.userId = user;
 
@@ -319,7 +322,7 @@ const ProfileScreen = props => {
         ) : (
           <SimpleButton
             style={styles.btnWrap}
-            btnTitle={'Reset Password'}
+            btnTitle={'Reset password'}
             onPress={resetHandler}
           />
         )}

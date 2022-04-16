@@ -1,4 +1,3 @@
-/* eslint-disable no-shadow */
 import React, {createContext, useState} from 'react';
 import {Alert} from 'react-native';
 import auth from '@react-native-firebase/auth';
@@ -7,6 +6,7 @@ import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
 import firestore from '@react-native-firebase/firestore';
 // import database from '@react-native-firebase/database';
 import appleAuth from '@invertase/react-native-apple-authentication';
+import {encryptionData, encryptionText} from '../components/Encryption';
 
 export const AuthContext = createContext();
 
@@ -36,7 +36,7 @@ export const AuthProvider = ({children}) => {
               .signInWithCredential(googleCredential)
               .then(data => {
                 let userData = {};
-
+                const userId = auth().currentUser.uid;
                 firestore()
                   .collection('Users')
                   .doc(auth().currentUser.uid)
@@ -54,10 +54,18 @@ export const AuthProvider = ({children}) => {
                         });
                     } else {
                       console.log('yesss else part!');
-                      userData.name = data.user.displayName;
-                      //console.log(userData.name);
-                      userData.email = data.user.email.toLowerCase();
-                      userData.phone = data.user.phoneNumber;
+                      userData.name = encryptionData(
+                        userId,
+                        data.user.displayName,
+                      );
+                      userData.email = encryptionData(
+                        userId,
+                        data.user.email.toLowerCase(),
+                      );
+                      userData.phone = encryptionData(
+                        userId,
+                        data.user.phoneNumber,
+                      );
                       userData.image = null;
                       userData.userId = auth().currentUser.uid;
 
@@ -106,10 +114,7 @@ export const AuthProvider = ({children}) => {
               .signInWithCredential(facebookCredential)
               .then(data => {
                 let userData = {};
-
-                //userData.name = data.user.displayName;
-                //userData.email = data.user.email.toLowerCase();
-                //userData.phone = data.user.phoneNumber;
+                const userId = auth().currentUser.uid;
 
                 firestore()
                   .collection('Users')
@@ -126,9 +131,18 @@ export const AuthProvider = ({children}) => {
                           userData,
                         });
                     } else {
-                      userData.name = data.user.displayName;
-                      userData.email = data.user.email.toLowerCase();
-                      userData.phone = data.user.phoneNumber;
+                      userData.name = encryptionData(
+                        userId,
+                        data.user.displayName,
+                      );
+                      userData.email = encryptionData(
+                        userId,
+                        data.user.email.toLowerCase(),
+                      );
+                      userData.phone = encryptionData(
+                        userId,
+                        data.user.phoneNumber,
+                      );
                       userData.image = null;
                       userData.userId = auth().currentUser.uid;
 
@@ -154,14 +168,15 @@ export const AuthProvider = ({children}) => {
               .createUserWithEmailAndPassword(email, password)
               .then(data => {
                 let userData = {};
+                const userId = auth().currentUser.uid;
 
-                userData.name = name;
-                userData.email = email.toLowerCase();
-                userData.phone = phone;
+                userData.name = encryptionData(userId, name);
+                userData.email = encryptionData(userId, email.toLowerCase());
+                userData.phone = encryptionData(userId, phone);
                 userData.image = null;
                 userData.userId = auth().currentUser.uid;
 
-                console.log(userData);
+                //console.log(userData);
 
                 firestore()
                   .collection('Users')
@@ -225,6 +240,7 @@ export const AuthProvider = ({children}) => {
               .signInWithCredential(appleCredential)
               .then(data => {
                 let userData = {};
+                const userId = auth().currentUser.uid;
 
                 firestore()
                   .collection('Users')
@@ -243,10 +259,18 @@ export const AuthProvider = ({children}) => {
                         });
                     } else {
                       console.log('yesss else part!');
-                      userData.name = data.user.displayName;
-                      //console.log(userData.name);
-                      userData.email = data.user.email.toLowerCase();
-                      userData.phone = data.user.phoneNumber;
+                      userData.name = encryptionData(
+                        userId,
+                        data.user.displayName,
+                      );
+                      userData.email = encryptionData(
+                        userId,
+                        data.user.email.toLowerCase(),
+                      );
+                      userData.phone = encryptionData(
+                        userId,
+                        data.user.phoneNumber,
+                      );
                       userData.image = null;
                       userData.userId = auth().currentUser.uid;
 

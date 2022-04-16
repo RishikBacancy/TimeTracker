@@ -7,6 +7,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Colors from '../Constants/Colors';
 import {AuthContext} from '../navigaion/AuthProvider';
 import firestore from '@react-native-firebase/firestore';
+import {decryptionData, encryptionData} from '../components/Encryption';
 
 const ChatScreen = props => {
   const [messages, setMessages] = useState([]);
@@ -27,47 +28,50 @@ const ChatScreen = props => {
       .collection('Messages')
       .orderBy('createdAt', 'desc');
 
-    msgRef.onSnapshot(querySnapshot => {
+    const unSub = msgRef.onSnapshot(querySnapshot => {
       if (querySnapshot != null) {
-        const allMsg = querySnapshot.docs.map(docSnap => {
+        let allMsg = querySnapshot.docs.map(docSnap => {
           const msgData = docSnap.data();
 
           if (msgData.createdAt) {
             return {
               ...docSnap.data(),
+              text: decryptionData(roomid, docSnap.data().text),
               createdAt: docSnap.data().createdAt.toDate(),
             };
           } else {
             return {
               ...docSnap.data(),
+              text: decryptionData(roomid, docSnap.data().text),
               createdAt: new Date(),
             };
           }
         });
-
         setMessages(allMsg);
       }
     });
 
     return () => {
-      setMessages();
+      unSub();
     };
   }, [user.uid, userId]);
 
   const onSend = messageArray => {
     const msg = messageArray[0];
+
+    const roomId =
+      userId > user.uid ? user.uid + '-' + userId : userId + '-' + user.uid;
+
     const myMsg = {
       ...msg,
+      text: encryptionData(roomId, msg.text),
       sentBY: user.uid,
       sentTo: userId,
     };
 
-    console.log(myMsg);
+    //console.log(myMsg);
 
-    setMessages(previousMessages => GiftedChat.append(previousMessages, myMsg));
-
-    const roomId =
-      userId > user.uid ? user.uid + '-' + userId : userId + '-' + user.uid;
+    //setMessages(previousMessages => GiftedChat.append(previousMessages, myMsg));
 
     firestore()
       .collection('ChatRooms')
